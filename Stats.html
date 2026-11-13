@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistical Analysis Reviewer</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#101421; --panel:#191f30; --edge:#343e56; --text:#f3f5ff;
+  --muted:#b6c0d7; --accent:#c0b5ff; --accent-text:#1e1549;
+  --good:#9ce7ba; --bad:#ffb8a9; --entry:#121827;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg:#f3f1fb; --panel:#fff; --edge:#d8d1e8; --text:#211934;
+    --muted:#5d536e; --accent:#5942af; --accent-text:#fff;
+    --good:#146338; --bad:#9a3927; --entry:#fcfbff;
+  }
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--text); font: .94rem/1.4 Inter,system-ui,sans-serif; }
+main { width:min(100% - 1.5rem, 68rem); margin:1.2rem auto; }
+h1, h2, p { margin:0; }
+h1 { font-size:clamp(1.55rem, 4vw, 2.35rem); line-height:1.15; }
+header p, small { color:var(--muted); }
+header p { margin-top:.3rem; }
+.progress-panel { position:sticky; top:0; z-index:1; padding:.5rem 0; margin:.45rem 0; background:var(--bg); }
+.progress-row, .controls, footer { display:flex; flex-wrap:wrap; gap:.4rem .65rem; align-items:center; }
+.progress-row, footer { justify-content:space-between; }
+.progress-row { font-weight:650; }
+progress { display:block; width:100%; height:.45rem; margin-top:.35rem; accent-color:var(--accent); }
+#questions { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:.55rem; align-items:start; }
+@media (max-width: 680px) { #questions { grid-template-columns:minmax(0, 1fr); } }
+.question, #summary { background:var(--panel); border:1px solid var(--edge); border-radius:.65rem; padding:.7rem .8rem; }
+.question { scroll-margin-top:3.8rem; min-width:0; }
+.context { font-size:.76rem; font-weight:700; color:var(--accent); margin-bottom:.23rem; }
+.question h2 { font-size:1rem; font-weight:650; overflow-wrap:anywhere; }
+.directions { margin-top:.25rem; color:var(--muted); font-size:.8rem; }
+fieldset { display:grid; grid-template-columns:minmax(0, 1fr); gap:.35rem; padding:0; border:0; min-width:0; margin:.55rem 0 .45rem; }
+fieldset.enumeration { grid-template-columns:repeat(auto-fit, minmax(min(8rem, 100%), 1fr)); }
+.field { display:grid; gap:.15rem; min-width:0; }
+.field label { font-size:.78rem; font-weight:600; }
+input, button { font:inherit; color:inherit; background:var(--entry); border:1px solid var(--edge); border-radius:.4rem; }
+input { width:100%; min-width:0; padding:.28rem .45rem; }
+button { padding:.26rem .55rem; min-height:1.9rem; font-size:.82rem; font-weight:650; cursor:pointer; }
+.primary { background:var(--accent); color:var(--accent-text); border-color:transparent; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.feedback { background:var(--entry); border:1px solid var(--edge); border-radius:.4rem; margin-top:.45rem; padding:.38rem .5rem; font-size:.84rem; overflow-wrap:anywhere; }
+.feedback p { color:var(--text); margin-top:.22rem; }
+.feedback[data-result="correct"], .field .correct { color:var(--good); }
+.feedback[data-result="incorrect"], .field .incorrect { color:var(--bad); }
+#summary { margin-top:.65rem; }
+#summary h2 { font-size:1.12rem; }
+#summary p { margin:.25rem 0 .45rem; }
+footer { margin-top:.65rem; }
+[hidden] { display:none !important; }
+.question h2, .feedback { scroll-margin-top:3.8rem; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Statistical Analysis Reviewer</h1>
+    <p>Midterm + Finals · <span id="bank-count"></span> mixed questions</p>
+  </header>
+  <section class="progress-panel" aria-label="Attempt progress">
+    <div class="progress-row" role="status"><span id="progress-label"></span><span id="score"></span></div>
+    <progress id="progress" aria-label="Questions checked"></progress>
+  </section>
+  <section id="questions" aria-label="Review questions"></section>
+  <section id="summary" hidden aria-labelledby="summary-title">
+    <h2 id="summary-title">Attempt complete</h2>
+    <p id="summary-text"></p>
+    <div class="controls">
+      <button id="retry" class="primary" type="button">Retry missed questions</button>
+    </div>
+  </section>
+  <footer>
+    <small>Source: STATS-REV-MID-FIN(1).pdf</small>
+    <button id="restart" type="button">Restart full reviewer</button>
+  </footer>
+</main>
+<template id="question-template">
+  <article class="question">
+    <p class="context"></p>
+    <h2 tabindex="-1"></h2>
+    <p class="directions"></p>
+    <form autocomplete="off">
+      <fieldset aria-label="Your answers"></fieldset>
+      <div class="controls">
+        <button class="primary" type="submit">Check answer</button>
+        <button class="reveal" type="button">Reveal answer</button>
+      </div>
+    </form>
+    <div class="feedback" hidden tabindex="-1"></div>
+  </article>
+</template>
+<script id="question-bank" type="application/json">[{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"What Latin word meaning “state” is the root of statistics?","groups":[["status"]],"explanation":"The word status means state."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"Which branch collects, presents, and summarizes the observations of a group?","groups":[["descriptive statistics"]],"explanation":"It describes the data that were observed."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"Which branch uses a sample to draw conclusions about a population?","groups":[["inferential statistics","statistical inference","inductive statistics"]],"explanation":"It uses sample evidence to generalize to the population."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"What is the entire group about which a researcher wants to draw a conclusion?","groups":[["population"]],"explanation":"The population includes every member relevant to the research question."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"What is the portion of a population selected for analysis?","groups":[["sample"]],"explanation":"A sample contains the members actually selected for study."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"What is a numerical measure describing a population characteristic?","groups":[["parameter","population parameter"]],"explanation":"The true population mean μ is an example."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"What is a numerical measure computed from a sample?","groups":[["statistic","sample statistic"]],"explanation":"The sample mean x̄ is an example."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"A researcher conducts a new survey specifically for their study. What type of data is collected?","groups":[["primary data","primary"]],"explanation":"The researcher obtains it directly from an original source for the study."},{"type":"I","topic":"Nature of Statistics","pages":"1","prompt":"A researcher reuses published government statistics. What type of data is this?","groups":[["secondary data","secondary"]],"explanation":"The information was previously collected and recorded."},{"type":"E","topic":"Nature of Statistics","pages":"1","prompt":"Name the two branches of statistics.","groups":[["descriptive statistics","descriptive"],["inferential statistics","inferential","inductive statistics"]],"explanation":"Descriptive statistics summarizes observations. Inferential statistics generalizes from a sample to a population."},{"type":"E","topic":"Nature of Statistics","pages":"1","prompt":"Name the two sources of data based on whether the information is newly collected or already recorded.","groups":[["primary data","primary"],["secondary data","secondary"]],"explanation":"Primary data is collected for the current research. Secondary data already exists."},{"type":"E","topic":"Nature of Statistics","pages":"1","prompt":"Give the two uses of statistics by ancient state leaders mentioned in the PDF.","groups":[["taxation","tax","taxes","levy taxes","determine taxes","tax collection"],["military planning","war","military","determine how many soldiers are needed","count soldiers","soldiers","estimate troop needs"]],"explanation":"Leaders used statistics to determine taxes and estimate how many soldiers were needed."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What do you call a characteristic that can take different values?","groups":[["variable"]],"explanation":"Weight and eye color can both vary from person to person."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What do you call a characteristic that stays fixed in the context being studied?","groups":[["constant"]],"explanation":"A constant has the same value across the observations under consideration."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What type of quantitative variable is the number of clinic visits recorded in one day?","groups":[["discrete","discrete variable","discrete quantitative variable","discrete data"]],"explanation":"Visits are counted in whole numbers."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What type of quantitative variable is a student's exact height?","groups":[["continuous","continuous variable","continuous quantitative variable","continuous data"]],"explanation":"Height is measured and can take intermediate values."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What type of variable classifies people into categories such as eye color?","groups":[["qualitative","categorical","qualitative variable","categorical variable","qualitative data","categorical data"]],"explanation":"Its possible values are category labels."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What type of variable represents a numerical amount, such as income?","groups":[["quantitative","quantitative variable","numerical variable","quantitative data","numerical"]],"explanation":"It measures how much or how many."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What is the experimental variable the researcher manipulates, such as the amount of fertilizer?","groups":[["independent variable","independent","explanatory variable"]],"explanation":"Its effect on an outcome is the focus of the experiment."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"What is the experimental variable measured as the outcome, such as plant growth?","groups":[["dependent variable","dependent","outcome variable","response variable"]],"explanation":"Its value may change in response to the independent variable."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Which scale classifies eye color into unordered categories?","groups":[["nominal","nominal scale","nominal data"]],"explanation":"Eye colors function as names or labels."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Which scale describes ordered satisfaction ratings with gaps that need not be equal?","groups":[["ordinal","ordinal scale","ordinal data"]],"explanation":"The rankings carry information about order."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Which scale describes Celsius temperatures, where equal differences are meaningful and zero is conventional?","groups":[["interval","interval scale","interval data"]],"explanation":"A 10 °C difference has the same size anywhere on the scale. Zero Celsius is a reference point."},{"type":"I","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Which scale describes distance and has a true zero?","groups":[["ratio","ratio scale","ratio data"]],"explanation":"Zero distance represents the absence of distance, so ratios are meaningful."},{"type":"E","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Enumerate the four levels of measurement.","groups":[["nominal","nominal scale","nominal data"],["ordinal","ordinal scale","ordinal data"],["interval","interval scale","interval data"],["ratio","ratio scale","ratio data"]],"explanation":"NOIR stands for nominal, ordinal, interval, and ratio."},{"type":"E","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Give the two mathematical classifications of quantitative variables.","groups":[["discrete","discrete variable"],["continuous","continuous variable"]],"explanation":"Discrete values are countable. Continuous values can take any value in an interval."},{"type":"E","topic":"Variables & Measurement Scales","pages":"1–2","prompt":"Name the two experimental classifications of variables.","groups":[["independent","independent variable","explanatory variable"],["dependent","dependent variable","outcome variable","response variable"]],"explanation":"The independent variable is the explanatory factor. The dependent variable is the measured outcome."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What measure of center is the sum of observations divided by their count?","groups":[["mean","arithmetic mean","average"]],"explanation":"The arithmetic mean is Σx ÷ n."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What measure is the middle of the ordered data and is relatively resistant to outliers?","groups":[["median"]],"explanation":"For an even count, average the two middle observations."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What measure identifies the most frequently occurring observation?","groups":[["mode"]],"explanation":"A dataset can have more than one mode if multiple values tie for the highest frequency."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What measure is the average of the minimum and maximum?","groups":[["midrange","mid range"]],"explanation":"Add the smallest and largest observations, then divide by 2."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What measure of spread is based on squared deviations from the mean?","groups":[["variance","population variance","sample variance"]],"explanation":"Population variance divides the sum of squared deviations by N. Sample variance typically uses n − 1."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What measure is the square root of variance and shares the units of the observations?","groups":[["standard deviation","sd"]],"explanation":"Taking the square root returns the spread to the original units."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"What is the difference between a dataset's largest and smallest values?","groups":[["range"]],"explanation":"Compute maximum − minimum."},{"type":"I","topic":"Descriptive Statistics","pages":"2–3","prompt":"The values are 10, 12, 13, 17, 20, and 24. What is the mode?","groups":[["no mode","none","no modes","there is no mode"]],"explanation":"Each observation occurs only once."},{"type":"E","topic":"Descriptive Statistics","pages":"2–3","prompt":"Name the three common measures of central tendency based on average, middle value, and most frequent value.","groups":[["mean","arithmetic mean","average"],["median"],["mode"]],"explanation":"The mean uses every observation, the median uses position, and the mode uses frequency."},{"type":"E","topic":"Descriptive Statistics","pages":"2–3","prompt":"In the 18-driver example from the PDF, what are the two modes? Give one number per box.","groups":[["0","zero"],["3","three"]],"explanation":"Both 0 and 3 occur six times, the highest frequency in that example."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the mean of 10, 12, 13, 17, 20, and 24.","groups":[["16"]],"explanation":"The observations total 96, so the mean is 96 ÷ 6 = 16."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the median of 10, 12, 13, 17, 20, and 24.","groups":[["15"]],"explanation":"The middle observations are 13 and 17. Their average is 15."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the midrange of 10, 12, 13, 17, 20, and 24.","groups":[["17"]],"explanation":"The midrange is (10 + 24) ÷ 2 = 17."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the range of 10, 12, 13, 17, 20, and 24.","groups":[["14"]],"explanation":"The range is 24 − 10 = 14."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"The six dog weights are 10, 12, 13, 17, 20, and 24 kg. Treat them as the entire population and find the variance in kg². Round to two decimals.","groups":[["23.67"]],"explanation":"The sum of squared deviations from 16 is 142. Divide by 6 to get 23.67 kg²."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the population standard deviation in kg for the same six dog weights of 10, 12, 13, 17, 20, and 24. Round to two decimals.","groups":[["4.87"]],"explanation":"The square root of 142 ÷ 6 is about 4.87 kg."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the mean of 3, 1, 4, 2.5, and 50.","groups":[["12.1"]],"explanation":"The total is 60.5. Dividing by 5 gives 12.1."},{"type":"C","topic":"Descriptive Statistics","pages":"2–3","prompt":"Find the median of 3, 1, 4, 2.5, and 50.","groups":[["3"]],"explanation":"The ordered values are 1, 2.5, 3, 4, and 50. The third value is 3."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What table organizes observations into values or classes and records their counts?","groups":[["frequency distribution","frequency distribution table","frequency table"]],"explanation":"Each row reports how many observations belong to the value or class."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What graph uses adjacent vertical bars for class intervals and shows their frequencies?","groups":[["histogram"]],"explanation":"The vertical scale in the PDF's histogram gives the class frequencies."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What graph joins frequency points plotted at class midpoints?","groups":[["frequency polygon"]],"explanation":"Each point pairs a class midpoint with its frequency."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What graph plots cumulative frequencies at upper class boundaries?","groups":[["ogive","cumulative frequency polygon","cumulative frequency graph"]],"explanation":"The plotted values accumulate observations through each class."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What display separates leading digits from trailing digits so individual observations remain visible?","groups":[["stem and leaf plot","stem-and-leaf plot","stem and leaf","stem-and-leaf","stemplot"]],"explanation":"The stem and leaf combine to reconstruct each observation."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"Who introduced the stem-and-leaf plot?","groups":[["John Tukey","Tukey","John W Tukey"]],"explanation":"John Tukey introduced this display as a way to see both distribution shape and individual observations."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What distribution shape has a longer tail to the right?","groups":[["right skewed","skewed right","positive skew","positively skewed","right skewed distribution","positively skewed distribution"]],"explanation":"A few larger observations stretch the right tail."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What distribution shape has a longer tail to the left?","groups":[["left skewed","skewed left","negative skew","negatively skewed","left skewed distribution","negatively skewed distribution"]],"explanation":"A few smaller observations stretch the left tail."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What distribution shape has equal frequencies across classes?","groups":[["uniform","uniform distribution","rectangular","rectangular distribution"]],"explanation":"Equal class frequencies create a flat profile."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What distribution shape has two distinct peaks?","groups":[["bimodal","bimodal distribution"]],"explanation":"The prefix bi means two."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What distribution shape in the PDF has one central peak and symmetric tails?","groups":[["symmetrical bell shaped","symmetric bell shaped","bell shaped","bell-shaped distribution","symmetrical bell-shaped distribution","normal","normal distribution"]],"explanation":"A bell-shaped distribution has a peak in the center and similar left and right tails."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What are the stated smallest and largest values that describe a class called?","groups":[["class limits","apparent limits","limits"]],"explanation":"For a class written 10–19, the stated limits are 10 and 19."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What are the real limits that separate adjacent classes called?","groups":[["class boundaries","real limits","boundaries"]],"explanation":"For whole-number classes 10–19 and 20–29, the shared boundary is 19.5."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is the distance between a class's lower and upper boundaries?","groups":[["class width","class interval","interval width","width","interval"]],"explanation":"For boundaries 9.5 and 19.5, the width is 10."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is the number of observations in a single class called?","groups":[["frequency","class frequency","f"]],"explanation":"It is the count for that class."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is a class frequency divided by the total count called?","groups":[["relative frequency","rf"]],"explanation":"It expresses the class's share of all observations."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is the running total of frequencies through a given class called?","groups":[["cumulative frequency","cf"]],"explanation":"Add the current class frequency to the preceding class frequencies."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is the value halfway between the class limits called?","groups":[["midpoint","class midpoint","class mark"]],"explanation":"Average the lower and upper class limits."},{"type":"I","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is the name for data in its original collected form?","groups":[["raw data","raw"]],"explanation":"Raw data is recorded before grouping or summarizing."},{"type":"E","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"Name the two parts of a stem-and-leaf plot.","groups":[["stem"],["leaf","leaves"]],"explanation":"The stem holds the leading digit or digits. The leaf holds the trailing digit."},{"type":"E","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"Name the three graphs in the PDF that use adjacent bars, connected class midpoints, and cumulative frequencies.","groups":[["histogram"],["frequency polygon"],["ogive","cumulative frequency polygon","cumulative frequency graph"]],"explanation":"The three displays emphasize interval counts, class midpoint counts, and running totals, respectively."},{"type":"C","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"A class has frequency 12 out of 60 observations. Give its relative frequency as a decimal.","groups":[["0.2"]],"explanation":"Divide 12 by 60 to get 0.20."},{"type":"C","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"For the same class frequency of 12 out of 60, give the percentage as a number. Example input format: 15.","groups":[["20"]],"explanation":"Multiply 12 ÷ 60 by 100 to get 20%."},{"type":"C","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"What is the midpoint of the class 20–29?","groups":[["24.5"]],"explanation":"Compute (20 + 29) ÷ 2."},{"type":"C","topic":"Frequency Distributions & Graphs","pages":"3–4","prompt":"The first three class frequencies are 4, 6, and 7. What is the cumulative frequency through the third class?","groups":[["17"]],"explanation":"The running total is 4 + 6 + 7 = 17."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which probability method selects individuals using a lottery or a random number generator?","groups":[["simple random sampling","simple random sample","srs","simple random"]],"explanation":"Each size-n sample is equally likely in a simple random sample."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method selects every kth element after a random start?","groups":[["systematic sampling","systematic"]],"explanation":"The fixed selection interval is k."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method divides the population into groups and randomly samples members from each group?","groups":[["stratified sampling","stratified random sampling","simple stratified sampling","stratified"]],"explanation":"Every stratum contributes members to the sample."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method selects groups such as schools, then studies members in those selected groups?","groups":[["cluster sampling","cluster"]],"explanation":"The groups are the units initially sampled."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method recruits individuals who are easiest to reach?","groups":[["convenience sampling","convenience"]],"explanation":"Participants are selected for availability."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method relies on a researcher's judgment to select people with relevant information?","groups":[["purposive sampling","purposive","judgment sampling","judgement sampling","judgment","judgement"]],"explanation":"The PDF uses purposive and judgment sampling as related names for this selection approach."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method fills a fixed number of respondents for a category, with selection left to the interviewer?","groups":[["quota sampling","quota"]],"explanation":"The target count is set in advance."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method finds new participants through referrals from existing participants?","groups":[["snowball sampling","snowball","chain referral sampling"]],"explanation":"The initial participants help the sample grow by referring others."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which method lets respondents choose to join, as in an open online poll?","groups":[["voluntary sampling","voluntary response sampling","voluntary response","self selection","self-selection sampling","voluntary"]],"explanation":"Participants select themselves by responding."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which data collection method uses a face-to-face encounter?","groups":[["interview","interview method","direct","direct method","direct interview method"]],"explanation":"An interviewer obtains the information directly from the respondent."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which data collection method uses a mailed or hand-delivered set of questions?","groups":[["questionnaire","questionnaire method","indirect","indirect method","indirect questionnaire method"]],"explanation":"Respondents provide information using a questionnaire."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which collection method gathers records such as birth certificates under laws?","groups":[["registration","registration method"]],"explanation":"Registration records are created under a legal requirement or process."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which collection method records behaviors when an event occurs?","groups":[["observation","observation method"]],"explanation":"The researcher observes events or behaviors as they occur."},{"type":"I","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Which collection method uses controlled conditions to investigate cause and effect?","groups":[["experiment","experimental","experimental method","experiment method","experimentation"]],"explanation":"The researcher controls conditions and manipulates a factor to study its effect."},{"type":"E","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Enumerate the four probability sampling methods in the PDF.","groups":[["simple random sampling","simple random","simple random sample","srs"],["systematic sampling","systematic"],["stratified sampling","stratified random sampling","simple stratified sampling","stratified"],["cluster sampling","cluster"]],"explanation":"The four methods are simple random, systematic, stratified, and cluster sampling."},{"type":"E","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Enumerate the five distinct nonprobability approaches in the PDF. Treat purposive and judgment as one approach.","groups":[["convenience sampling","convenience"],["purposive sampling","purposive","judgment sampling","judgement sampling","judgment","judgement"],["quota sampling","quota"],["snowball sampling","snowball"],["voluntary sampling","voluntary response sampling","voluntary response","voluntary","self selection"]],"explanation":"Convenience uses access, purposive uses judgment, quota fills set counts, snowball uses referrals, and voluntary sampling uses self-selection."},{"type":"E","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Name the five data collection methods listed in the PDF.","groups":[["interview","interview method","direct","direct method","direct interview method"],["questionnaire","questionnaire method","indirect","indirect method","indirect questionnaire method"],["registration","registration method"],["observation","observation method"],["experiment","experiment method","experimental method","experimentation"]],"explanation":"The methods are interview, questionnaire, registration, observation, and experiment."},{"type":"E","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Name the three methods of presenting data.","groups":[["textual","textual method","narrative"],["tabular","tabular method","table"],["graphical","graphical method","graph","visual"]],"explanation":"Textual uses prose, tabular uses rows and columns, and graphical uses visuals."},{"type":"E","topic":"Sampling & Data Collection","pages":"3–4","prompt":"Give the four items listed under “Limits on Inferences and Warnings.” Treat sample size and quality as one item.","groups":[["response rates","response rate"],["source of data","data source","data sources"],["sample size and sample quality","sample size and quality","size and quality of the sample","sample quality and size"],["random","randomness","random sampling","random selection","randomization"]],"explanation":"Consider who responded, where the data came from, how large and representative the sample is, and how randomness was applied."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What is the procedure of using a sample to generalize about a larger population?","groups":[["statistical inference","inference","inferential statistics"]],"explanation":"Sample statistics provide evidence about population parameters."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What term names the formula or rule used to compute an estimate?","groups":[["estimator"]],"explanation":"An estimator produces an estimate when applied to the sample data."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What is a single numerical value used to estimate a population parameter?","groups":[["point estimate","estimate"]],"explanation":"A sample mean of 50 is one possible point estimate of μ."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What procedure estimates a population parameter using a range of plausible values?","groups":[["interval estimation","interval estimate","confidence interval estimation"]],"explanation":"The range is often expressed as an estimate plus or minus a margin of error."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What is the difference between a sample statistic and its population parameter due to sampling?","groups":[["sampling error"]],"explanation":"A sample can differ from the population through chance variation."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What is the distribution of a statistic across repeated samples of the same size?","groups":[["sampling distribution"]],"explanation":"The values being distributed are sample statistics."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What distribution consists of the sample means computed across samples of the same size?","groups":[["sampling distribution of the mean","sampling distribution of means","sampling distribution of sample means"]],"explanation":"Each sample contributes one mean to this distribution."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What theorem explains why the sampling distribution of the mean approaches normality as sample size grows under standard conditions?","groups":[["central limit theorem","clt"]],"explanation":"The PDF gives n ≥ 30 as a classroom rule of thumb. The approximation also depends on the population and sampling conditions."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What is the standard deviation of a sampling distribution called?","groups":[["standard error","se","standard error of the mean","sem"]],"explanation":"For sample means from independent observations, the theoretical SE is σ ÷ √n."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What Greek symbol represents the population mean?","groups":[["μ","mu"]],"explanation":"The corresponding sample symbol is x̄."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What symbol represents the sample mean?","groups":[["x̄","x bar","x-bar","xbar"]],"explanation":"The corresponding population symbol is μ."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What Greek symbol represents the population standard deviation?","groups":[["σ","sigma"]],"explanation":"The corresponding sample symbol is s."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What symbol represents the sample standard deviation?","groups":[["s"]],"explanation":"The corresponding population symbol is σ."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What Greek symbol does this PDF use for the population proportion?","groups":[["π","pi"]],"explanation":"The PDF uses p for the sample proportion."},{"type":"I","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"What symbol does this PDF use for the sample proportion?","groups":[["p","p hat","p-hat","phat","p̂"]],"explanation":"The PDF writes p. Some texts use p̂ for the same quantity."},{"type":"E","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"Name the two broad ways of making statistical inferences in the PDF.","groups":[["estimation","estimation of parameters","parameter estimation"],["hypothesis testing","hypothesis test"]],"explanation":"Estimation gives a value or range. Hypothesis testing evaluates a claim."},{"type":"E","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"Name the two forms of estimation.","groups":[["point estimation","point estimate"],["interval estimation","interval estimate"]],"explanation":"Point estimation yields one number. Interval estimation gives a range."},{"type":"E","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"Give the three CLT properties for the sampling distribution of the mean in the PDF. For the standard error, you may enter “sigma / sqrt(n)” as words or symbols.","groups":[["approximately normal","normal","normal distribution","normally distributed","approximately normally distributed"],["mean equals population mean","mean equal to population mean","population mean","mu","μ"],["standard error","standard error of the mean","sigma sqrt n","σ √n","sigma divided by square root of n","population standard deviation divided by square root of sample size","population standard deviation divided by the square root of the sample size"]],"explanation":"For sufficiently large samples under standard conditions, the shape approaches normal, its mean is μ, and its standard deviation is σ ÷ √n."},{"type":"C","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"A sample has s = 10 and n = 100. What is the estimated standard error of the mean?","groups":[["1"]],"explanation":"Compute s ÷ √n = 10 ÷ 10 = 1."},{"type":"C","topic":"Inference, Estimation & Sampling Distributions","pages":"4–6","prompt":"A population has σ = 12. For samples of size 36, what is the standard error of the mean?","groups":[["2"]],"explanation":"Compute σ ÷ √n = 12 ÷ 6 = 2."},{"type":"I","topic":"Confidence Intervals","pages":"6–7","prompt":"What is the range formed by adding and subtracting a margin of error from a sample estimate called?","groups":[["confidence interval","ci"]],"explanation":"The confidence level describes how often the method captures the true parameter in repeated sampling."},{"type":"I","topic":"Confidence Intervals","pages":"6–7","prompt":"What is the critical value multiplied by the standard error called?","groups":[["margin of error","error margin","moe"]],"explanation":"Add and subtract this amount from the point estimate to form the endpoints."},{"type":"I","topic":"Confidence Intervals","pages":"6–7","prompt":"Which critical-value distribution does the PDF use for a mean confidence interval when population σ is known?","groups":[["z","z distribution","z table","standard normal","standard normal distribution","normal","normal distribution"]],"explanation":"Use standard normal critical values under the conditions for the Z interval."},{"type":"I","topic":"Confidence Intervals","pages":"6–7","prompt":"Which critical-value distribution does the PDF use for a mean confidence interval when population σ is unknown and s is used?","groups":[["t","t distribution","student t","student t distribution","students t distribution","t table","student's t distribution"]],"explanation":"The critical value depends on confidence level and degrees of freedom."},{"type":"I","topic":"Confidence Intervals","pages":"6–7","prompt":"What happens to CI width when sample size increases and the other inputs stay fixed?","groups":[["narrows","narrower","decreases","smaller","gets narrower","becomes narrower","decrease"]],"explanation":"A larger sample reduces the standard error."},{"type":"I","topic":"Confidence Intervals","pages":"6–7","prompt":"What happens to CI width when confidence level increases and the other inputs stay fixed?","groups":[["widens","wider","increases","larger","gets wider","becomes wider","increase"]],"explanation":"A higher confidence level uses a larger critical value."},{"type":"E","topic":"Confidence Intervals","pages":"6–7","prompt":"Name the three factors that affect confidence interval width in the PDF.","groups":[["confidence level","level of confidence"],["data variability","variability","standard deviation","spread","population standard deviation"],["sample size","n"]],"explanation":"Greater confidence or variability widens the interval. A larger sample generally narrows it."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"Give the two-sided Z critical value for a 95% confidence interval.","groups":[["1.96"]],"explanation":"The middle 95% of the standard normal curve leaves 2.5% in each tail."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"Give the two-sided Z critical value for a 99% confidence interval. Round to two decimals.","groups":[["2.58"]],"explanation":"The standard normal critical value is approximately 2.576, which rounds to 2.58."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"A sample mean is 170 with SE = 1. Using Z = 1.96, find the lower endpoint of its 95% confidence interval.","groups":[["168.04"]],"explanation":"The lower endpoint is 170 − 1.96 × 1 = 168.04."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"A sample mean is 170 with SE = 1. Using Z = 1.96, find the upper endpoint of its 95% confidence interval.","groups":[["171.96"]],"explanation":"The upper endpoint is 170 + 1.96 × 1 = 171.96."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"The sample proportion is 0.35 and n = 140. Find the estimated SE of the proportion. Give a decimal rounded to four places.","groups":[["0.0403"]],"explanation":"Compute √(0.35 × 0.65 ÷ 140), which is about 0.04031."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"A sample of 140 gives p = 0.35. Using Z = 1.96 and the unrounded SE, find the lower endpoint of the 95% CI as a decimal rounded to three places.","groups":[["0.271"]],"explanation":"Compute 0.35 − 1.96 × √(0.35 × 0.65 ÷ 140) ≈ 0.271."},{"type":"C","topic":"Confidence Intervals","pages":"6–7","prompt":"A sample of 140 gives p = 0.35. Using Z = 1.96 and the unrounded SE, find the upper endpoint of the 95% CI as a decimal rounded to three places.","groups":[["0.429"]],"explanation":"Compute 0.35 + 1.96 × √(0.35 × 0.65 ÷ 140) ≈ 0.429."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What statistical method evaluates a claim about a population parameter using sample data?","groups":[["hypothesis testing","hypothesis test","significance testing"]],"explanation":"The method compares sample evidence with what would be expected under H₀."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What is the assumption under evaluation, often written with equality?","groups":[["null hypothesis","null","h0","h₀"]],"explanation":"For the blood pressure example, H₀ states μ = 120."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What is the competing claim to H₀, written μ ≠ 120 in the two-sided blood pressure example?","groups":[["alternative hypothesis","alternative","h1","h₁","ha","hₐ"]],"explanation":"For a two-sided test, the alternative allows the mean to differ in either direction."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What is α called when selected before hypothesis testing?","groups":[["significance level","level of significance","alpha","α"]],"explanation":"It sets the allowed probability of a Type I error under H₀."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What term names the probability, assuming H₀, of a result at least as extreme as what was observed?","groups":[["p value","p-value","pvalue","observed level of significance"]],"explanation":"Extremeness is measured in the direction or directions specified by the alternative."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What error is made by rejecting a true H₀?","groups":[["type i error","type 1 error","type i","type 1","false positive"]],"explanation":"A Type I error is a false positive. Its probability is represented by α."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What error is made by failing to reject a false H₀?","groups":[["type ii error","type 2 error","type ii","type 2","false negative"]],"explanation":"A Type II error is a false negative. Its probability is represented by β."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What is 1 − β called?","groups":[["power","statistical power","test power","power of the test"]],"explanation":"Power is the probability of rejecting a false H₀ for a specified alternative."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What decision do you make when p = 0.029 and α = 0.05?","groups":[["reject h0","reject h₀","reject the null","reject the null hypothesis","reject"]],"explanation":"The p-value is smaller than α, so reject H₀."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"What decision do you make when p = 0.12 and α = 0.05?","groups":[["fail to reject h0","fail to reject h₀","do not reject h0","do not reject h₀","fail to reject","do not reject","do not reject the null hypothesis","fail to reject the null hypothesis"]],"explanation":"The p-value is larger than α, so there is insufficient evidence to reject H₀."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"Which test in the PDF compares one sample mean against a hypothesized mean using s in place of σ?","groups":[["one sample t test","one-sample t-test","t test","t-test","t","student t test"]],"explanation":"The test compares x̄ with μ₀ using the estimated standard error."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"Which test in the PDF compares one sample proportion with a hypothesized proportion when the normal approximation is appropriate?","groups":[["one sample proportion z test","one-proportion z-test","one proportion z test","one sample z test","one-sample z-test","z test","z-test","z"]],"explanation":"The test standardizes the difference using the null proportion to compute the standard error."},{"type":"E","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"Name the two common significance levels listed in the PDF. Enter decimals or percentages.","groups":[["0.01",".01","1%"],["0.05",".05","5%"]],"explanation":"The two levels are 1% and 5%."},{"type":"E","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"Give the four changes that increase β, holding the other factors fixed.","groups":[["smaller effect","smaller effect size","smaller difference","smaller difference between true and hypothesized values","smaller difference between the hypothesized and true parameter"],["lower alpha","decreased alpha","smaller alpha","decrease in significance level","lower significance level"],["higher standard deviation","larger standard deviation","increased standard deviation","higher population standard deviation","more variability","greater variability","larger sigma"],["smaller sample","smaller sample size","lower sample size","decreased sample size","decrease in sample size","smaller n"]],"explanation":"A smaller effect, stricter significance level, greater variability, and smaller sample make detecting the difference harder."},{"type":"C","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"In the body temperature example, n = 18. What is the number of degrees of freedom for the one-sample t-test?","groups":[["17"]],"explanation":"For a one-sample t-test, df = n − 1."},{"type":"C","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"In the body temperature example, x̄ = 37.22, μ₀ = 37.60, and SE = 0.161. Compute the signed t statistic from these displayed inputs, rounded to two decimals.","groups":[["-2.36"]],"explanation":"Compute (37.22 − 37.60) ÷ 0.161 ≈ −2.36. The PDF shows an absolute t of 2.38 using more precise inputs. The two-sided decision uses the absolute value."},{"type":"C","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"In the body temperature example, df = 17. What is the positive t critical value for a two-sided test at α = 0.05?","groups":[["2.11"]],"explanation":"The df = 17 row and two-sided 0.05 column give 2.110."},{"type":"C","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"In the diabetic foot example, 100 out of 400 respondents had the condition. Give the sample proportion as a decimal.","groups":[["0.25"]],"explanation":"Compute 100 ÷ 400 = 0.25."},{"type":"C","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"In that example, p = 0.25, π₀ = 0.20, and n = 400. Compute the one-proportion Z statistic.","groups":[["2.5"]],"explanation":"Under H₀, the SE is √(0.20 × 0.80 ÷ 400) = 0.02. Then Z = (0.25 − 0.20) ÷ 0.02 = 2.50."},{"type":"I","topic":"Hypothesis Testing, t & Z","pages":"7–8","prompt":"In the diabetic foot example, the two-sided critical value is 1.96 and Z = 2.50. What is the decision about H₀?","groups":[["reject h0","reject h₀","reject the null","reject the null hypothesis","reject"]],"explanation":"Since the absolute Z exceeds 1.96, the data provide evidence that the population proportion differs from 20%."}]</script>
+<script>
+"use strict";
+
+const bank = JSON.parse(document.getElementById("question-bank").textContent);
+const types = { I: "Identification", E: "Enumeration", C: "Computation" };
+const key = "stats-mid-fin-20261112-reviewer-v1";
+const el = id => document.getElementById(id);
+const pointCount = question => question.groups.length;
+const totalPoints = order => order.reduce((total, id) => total + pointCount(bank[id]), 0);
+
+function shuffled(ids) {
+  const order = [...ids];
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+
+function newAttempt() {
+  return { order: shuffled(bank.map((_, id) => id)), drafts: {}, checked: {} };
+}
+
+function loadAttempt() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(key));
+    if (saved && Array.isArray(saved.order) && saved.order.length &&
+        saved.order.every(id => Number.isInteger(id) && bank[id]) &&
+        saved.drafts && saved.checked) {
+      const remaining = bank.map((_, id) => id).filter(id => !saved.order.includes(id));
+      return { order: [...saved.order, ...remaining], drafts: saved.drafts, checked: saved.checked };
+    }
+  } catch {}
+  return newAttempt();
+}
+
+let attempt = loadAttempt();
+
+function save() {
+  try { localStorage.setItem(key, JSON.stringify(attempt)); } catch {}
+}
+
+function normalize(answer) {
+  return answer.trim().toLowerCase().normalize("NFKC")
+    .replace(/[’']/g, "")
+    .replace(/[^\p{L}\p{M}\p{N}.%]+/gu, " ")
+    .replace(/^\s*(?:the|an|a)\s+/, "")
+    .replace(/\.+$/, "").trim();
+}
+
+function matchesNumber(answer, expected) {
+  const value = answer.trim().replace(/−/g, "-");
+  if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value)) return false;
+  return Number(value) === Number(expected);
+}
+
+function grade(question, responses) {
+  if (question.type === "C") return [matchesNumber(responses[0], question.groups[0][0])];
+  const matchedGroups = new Set();
+  return responses.map(response => {
+    const candidate = normalize(response);
+    const index = candidate ? question.groups.findIndex((aliases, group) =>
+      !matchedGroups.has(group) && aliases.some(alias => normalize(alias) === candidate)
+    ) : -1;
+    if (index >= 0) matchedGroups.add(index);
+    return index >= 0;
+  });
+}
+
+function updateProgress() {
+  const checked = attempt.order.filter(id => attempt.checked[id]);
+  const earned = checked.reduce((sum, id) => sum + attempt.checked[id].correct.filter(Boolean).length, 0);
+  const max = totalPoints(attempt.order);
+  const complete = checked.length === attempt.order.length;
+  const missed = checked.filter(id => !attempt.checked[id].correct.every(Boolean));
+
+  el("progress").max = attempt.order.length;
+  el("progress").value = checked.length;
+  el("progress-label").textContent = checked.length + " / " + attempt.order.length + " checked";
+  el("score").textContent = "Score " + earned + " / " + max;
+  el("summary").hidden = !complete;
+  el("retry").hidden = !missed.length;
+  if (complete) {
+    el("summary-text").textContent = earned + " of " + max + " points (" +
+      Math.round(earned * 100 / max) + "%). " + (checked.length - missed.length) +
+      " of " + checked.length + " questions fully correct.";
+  }
+}
+
+function showResult(card, question, result) {
+  const panel = card.querySelector(".feedback");
+  const points = result.correct.filter(Boolean).length;
+  const fullyCorrect = points === pointCount(question);
+  panel.dataset.result = fullyCorrect ? "correct" : "incorrect";
+
+  const status = document.createElement("strong");
+  status.textContent = (result.revealed ? "Answer revealed" : fullyCorrect
+    ? "Correct" : points > 0 ? "Partially correct" : "Incorrect") +
+    " · " + points + " / " + pointCount(question);
+  const answer = document.createElement("p");
+  answer.textContent = (question.type === "E" ? "Answers: " : "Answer: ") +
+    question.groups.map(group => group[0]).join(" · ");
+  const explanation = document.createElement("p");
+  explanation.textContent = question.explanation + " (PDF p. " + question.pages + ")";
+  panel.replaceChildren(status, answer, explanation);
+  panel.hidden = false;
+
+  card.querySelector(".controls").hidden = true;
+  card.querySelectorAll("input").forEach(input => { input.readOnly = true; });
+  if (question.type === "E" && !result.revealed) {
+    card.querySelectorAll(".field").forEach((field, index) => {
+      const mark = document.createElement("small");
+      mark.className = result.correct[index] ? "correct" : "incorrect";
+      mark.textContent = result.correct[index] ? "Correct" : "Incorrect or duplicate";
+      field.append(mark);
+    });
+  }
+}
+
+function makeQuestion(id, index) {
+  const question = bank[id];
+  const card = el("question-template").content.firstElementChild.cloneNode(true);
+  const heading = card.querySelector("h2");
+  const directions = card.querySelector(".directions");
+  const fields = card.querySelector("fieldset");
+  const form = card.querySelector("form");
+
+  heading.id = "question-" + id;
+  heading.textContent = (index + 1) + ". " + question.prompt;
+  card.setAttribute("aria-labelledby", heading.id);
+  card.querySelector(".context").textContent = types[question.type] + " · " + question.topic;
+  directions.id = "directions-" + id;
+  directions.textContent = question.type === "E"
+    ? "One answer per box, in any order."
+    : question.type === "C" ? "Enter a number. Follow the stated rounding." : "";
+  directions.hidden = !directions.textContent;
+  if (!directions.hidden) fields.setAttribute("aria-describedby", directions.id);
+  fields.classList.toggle("enumeration", question.type === "E");
+
+  const inputs = question.groups.map((_, slot) => {
+    const field = document.createElement("div");
+    field.className = "field";
+    const label = document.createElement("label");
+    label.htmlFor = "response-" + id + "-" + slot;
+    label.textContent = question.type === "E" ? "Answer " + (slot + 1) : "Your answer";
+    const input = document.createElement("input");
+    input.id = label.htmlFor;
+    input.type = "text";
+    input.spellcheck = false;
+    input.required = true;
+    if (question.type === "C") input.inputMode = "decimal";
+    input.value = attempt.drafts[id]?.[slot] ?? "";
+    input.addEventListener("input", () => {
+      attempt.drafts[id] ??= [];
+      attempt.drafts[id][slot] = input.value;
+      input.setCustomValidity("");
+      save();
+    });
+    field.append(label, input);
+    fields.append(field);
+    return input;
+  });
+
+  function record(revealed) {
+    if (attempt.checked[id]) return;
+    if (!revealed) {
+      const empty = inputs.find(input => !input.value.trim());
+      if (empty) {
+        empty.setCustomValidity("Enter an answer in this box.");
+        empty.reportValidity();
+        return;
+      }
+    }
+
+    const responses = inputs.map(input => input.value);
+    const result = {
+      revealed,
+      correct: revealed ? question.groups.map(() => false) : grade(question, responses)
+    };
+    attempt.drafts[id] = responses;
+    attempt.checked[id] = result;
+    save();
+    showResult(card, question, result);
+    updateProgress();
+    card.querySelector(".feedback").focus();
+  }
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    record(false);
+  });
+  card.querySelector(".reveal").addEventListener("click", () => record(true));
+  if (attempt.checked[id]) showResult(card, question, attempt.checked[id]);
+  return card;
+}
+
+function renderQuestions() {
+  const cards = document.createDocumentFragment();
+  attempt.order.forEach((id, index) => cards.append(makeQuestion(id, index)));
+  el("questions").replaceChildren(cards);
+  updateProgress();
+}
+
+el("restart").addEventListener("click", () => {
+  if (Object.keys(attempt.drafts).length && !confirm("Start over and clear this attempt?")) return;
+  attempt = newAttempt();
+  save();
+  renderQuestions();
+  el("question-" + attempt.order[0]).focus();
+});
+
+el("retry").addEventListener("click", () => {
+  const missed = attempt.order.filter(id => !attempt.checked[id]?.correct.every(Boolean));
+  if (!missed.length) return;
+  missed.forEach(id => {
+    delete attempt.checked[id];
+    delete attempt.drafts[id];
+  });
+  save();
+  renderQuestions();
+  el("question-" + missed[0]).focus();
+});
+
+el("bank-count").textContent = bank.length;
+renderQuestions();
+save();
+</script>
+</body>
+</html>
