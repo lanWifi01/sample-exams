@@ -4,86 +4,51 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Statistical Analysis Reviewer</title>
-<style>
-:root {
-  color-scheme: dark;
-  --bg:#101421; --panel:#191f30; --edge:#343e56; --text:#f3f5ff;
-  --muted:#b6c0d7; --accent:#c0b5ff; --accent-text:#1e1549;
-  --good:#9ce7ba; --bad:#ffb8a9; --entry:#121827;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
-    --bg:#f3f1fb; --panel:#fff; --edge:#d8d1e8; --text:#211934;
-    --muted:#5d536e; --accent:#5942af; --accent-text:#fff;
-    --good:#146338; --bad:#9a3927; --entry:#fcfbff;
-  }
-}
-* { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--text); font: .94rem/1.4 Inter,system-ui,sans-serif; }
-main { width:min(100% - 1.5rem, 68rem); margin:1.2rem auto; }
-h1, h2, p { margin:0; }
-h1 { font-size:clamp(1.55rem, 4vw, 2.35rem); line-height:1.15; }
-header p, small { color:var(--muted); }
-header p { margin-top:.3rem; }
-.progress-panel { position:sticky; top:0; z-index:1; padding:.5rem 0; margin:.45rem 0; background:var(--bg); }
-.progress-row, .controls, footer { display:flex; flex-wrap:wrap; gap:.4rem .65rem; align-items:center; }
-.progress-row, footer { justify-content:space-between; }
-.progress-row { font-weight:650; }
-progress { display:block; width:100%; height:.45rem; margin-top:.35rem; accent-color:var(--accent); }
-#questions { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:.55rem; align-items:start; }
-@media (max-width: 680px) { #questions { grid-template-columns:minmax(0, 1fr); } }
-.question, #summary { background:var(--panel); border:1px solid var(--edge); border-radius:.65rem; padding:.7rem .8rem; }
-.question { scroll-margin-top:3.8rem; min-width:0; }
-.context { font-size:.76rem; font-weight:700; color:var(--accent); margin-bottom:.23rem; }
-.question h2 { font-size:1rem; font-weight:650; overflow-wrap:anywhere; }
-.directions { margin-top:.25rem; color:var(--muted); font-size:.8rem; }
-fieldset { display:grid; grid-template-columns:minmax(0, 1fr); gap:.35rem; padding:0; border:0; min-width:0; margin:.55rem 0 .45rem; }
-fieldset.enumeration { grid-template-columns:repeat(auto-fit, minmax(min(8rem, 100%), 1fr)); }
-.field { display:grid; gap:.15rem; min-width:0; }
-.field label { font-size:.78rem; font-weight:600; }
-input, button { font:inherit; color:inherit; background:var(--entry); border:1px solid var(--edge); border-radius:.4rem; }
-input { width:100%; min-width:0; padding:.28rem .45rem; }
-button { padding:.26rem .55rem; min-height:1.9rem; font-size:.82rem; font-weight:650; cursor:pointer; }
-.primary { background:var(--accent); color:var(--accent-text); border-color:transparent; }
-:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-.feedback { background:var(--entry); border:1px solid var(--edge); border-radius:.4rem; margin-top:.45rem; padding:.38rem .5rem; font-size:.84rem; overflow-wrap:anywhere; }
-.feedback p { color:var(--text); margin-top:.22rem; }
-.feedback[data-result="correct"], .field .correct { color:var(--good); }
-.feedback[data-result="incorrect"], .field .incorrect { color:var(--bad); }
-#summary { margin-top:.65rem; }
-#summary h2 { font-size:1.12rem; }
-#summary p { margin:.25rem 0 .45rem; }
-footer { margin-top:.65rem; }
-[hidden] { display:none !important; }
-.question h2, .feedback { scroll-margin-top:3.8rem; }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<main>
-  <header>
+<body id="top">
+<header class="site-header">
+  <a class="skip-link button" href="#main-content">Skip to content</a>
+  <div class="shell site-bar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">E</span> Exams</a>
+    <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="AppDev.html">AppDev</a><a href="Finman.html">Finman</a><a href="Stats.html" aria-current="page">Stats</a></nav>
+    <button id="show-summary" class="button" type="button" aria-haspopup="dialog" aria-controls="answer-summary">Answer Summary</button>
+  </div>
+</header>
+<main class="shell" id="main-content" tabindex="-1">
+  <header class="page-intro">
+    <p class="eyebrow">Midterm and finals reviewer</p>
     <h1>Statistical Analysis Reviewer</h1>
-    <p>Midterm + Finals · <span id="bank-count"></span> mixed questions</p>
+    <p><span id="bank-count"></span> mixed questions. Topic links jump to the first question on that topic.</p>
+    <nav class="section-nav" id="topics" aria-label="Jump to topic"></nav>
   </header>
   <section class="progress-panel" aria-label="Attempt progress">
     <div class="progress-row" role="status"><span id="progress-label"></span><span id="score"></span></div>
     <progress id="progress" aria-label="Questions checked"></progress>
   </section>
-  <section id="questions" aria-label="Review questions"></section>
-  <section id="summary" hidden aria-labelledby="summary-title">
-    <h2 id="summary-title">Attempt complete</h2>
-    <p id="summary-text"></p>
-    <div class="controls">
-      <button id="retry" class="primary" type="button">Retry missed questions</button>
-    </div>
-  </section>
-  <footer>
-    <small>Source: STATS-REV-MID-FIN(1).pdf</small>
-    <button id="restart" type="button">Restart full reviewer</button>
+  <h2 class="questions-title" id="questions-title">Review questions</h2>
+  <section id="questions" aria-labelledby="questions-title"></section>
+  <footer class="review-footer">
+    <small>Source · STATS-REV-MID-FIN(1).pdf</small>
+    <div class="controls"><button id="restart" type="button">Restart full reviewer</button><a href="#top">Back to top ↑</a></div>
   </footer>
 </main>
+<dialog id="answer-summary" class="summary-dialog" aria-labelledby="answer-summary-title">
+  <header>
+    <h2 id="answer-summary-title">Answer Summary</h2>
+    <form method="dialog"><button type="submit">Close</button></form>
+  </header>
+  <p class="directions">The summary counts questions. A partial answer is listed under Wrong, and the score still awards credit for each correct entry.</p>
+  <dl class="summary-totals"><div><dt>Correct</dt><dd data-total="correct">0</dd></div><div><dt>Wrong</dt><dd data-total="wrong">0</dd></div><div><dt>Revealed</dt><dd data-total="revealed">0</dd></div><div><dt>Unchecked</dt><dd data-total="unchecked">0</dd></div></dl>
+  <h3>Wrong answers</h3>
+  <p class="summary-empty">No wrong answers yet.</p>
+  <ul hidden></ul>
+  <div class="controls"><button id="retry" class="primary" type="button" hidden>Retry missed or revealed questions</button></div>
+</dialog>
+<script src="review.js" defer></script>
+
 <template id="question-template">
-  <article class="question">
+  <article class="question" data-review-item tabindex="-1">
     <p class="context"></p>
     <h2 tabindex="-1"></h2>
     <p class="directions"></p>
@@ -91,7 +56,6 @@ footer { margin-top:.65rem; }
       <fieldset aria-label="Your answers"></fieldset>
       <div class="controls">
         <button class="primary" type="submit">Check answer</button>
-        <button class="reveal" type="button">Reveal answer</button>
       </div>
     </form>
     <div class="feedback" hidden tabindex="-1"></div>
@@ -171,27 +135,19 @@ function updateProgress() {
   const checked = attempt.order.filter(id => attempt.checked[id]);
   const earned = checked.reduce((sum, id) => sum + attempt.checked[id].correct.filter(Boolean).length, 0);
   const max = totalPoints(attempt.order);
-  const complete = checked.length === attempt.order.length;
-  const missed = checked.filter(id => !attempt.checked[id].correct.every(Boolean));
 
   el("progress").max = attempt.order.length;
   el("progress").value = checked.length;
   el("progress-label").textContent = checked.length + " / " + attempt.order.length + " checked";
   el("score").textContent = "Score " + earned + " / " + max;
-  el("summary").hidden = !complete;
-  el("retry").hidden = !missed.length;
-  if (complete) {
-    el("summary-text").textContent = earned + " of " + max + " points (" +
-      Math.round(earned * 100 / max) + "%). " + (checked.length - missed.length) +
-      " of " + checked.length + " questions fully correct.";
-  }
+  el("retry").hidden = !checked.some(id => !attempt.checked[id].correct.every(Boolean));
 }
 
 function showResult(card, question, result) {
   const panel = card.querySelector(".feedback");
   const points = result.correct.filter(Boolean).length;
   const fullyCorrect = points === pointCount(question);
-  panel.dataset.result = fullyCorrect ? "correct" : "incorrect";
+  card.dataset.reviewState = result.revealed ? "revealed" : fullyCorrect ? "correct" : "wrong";
 
   const status = document.createElement("strong");
   status.textContent = (result.revealed ? "Answer revealed" : fullyCorrect
@@ -225,7 +181,12 @@ function makeQuestion(id, index) {
   const fields = card.querySelector("fieldset");
   const form = card.querySelector("form");
 
+  card.id = "item-" + id;
   heading.id = "question-" + id;
+  const checkButton = form.querySelector("button[type=submit]");
+  const feedback = card.querySelector(".feedback");
+  feedback.id = "feedback-" + id;
+  checkButton.setAttribute("aria-controls", feedback.id);
   heading.textContent = (index + 1) + ". " + question.prompt;
   card.setAttribute("aria-labelledby", heading.id);
   card.querySelector(".context").textContent = types[question.type] + " · " + question.topic;
@@ -247,13 +208,11 @@ function makeQuestion(id, index) {
     input.id = label.htmlFor;
     input.type = "text";
     input.spellcheck = false;
-    input.required = true;
     if (question.type === "C") input.inputMode = "decimal";
     input.value = attempt.drafts[id]?.[slot] ?? "";
     input.addEventListener("input", () => {
       attempt.drafts[id] ??= [];
       attempt.drafts[id][slot] = input.value;
-      input.setCustomValidity("");
       save();
     });
     field.append(label, input);
@@ -261,18 +220,10 @@ function makeQuestion(id, index) {
     return input;
   });
 
-  function record(revealed) {
+  function record() {
     if (attempt.checked[id]) return;
-    if (!revealed) {
-      const empty = inputs.find(input => !input.value.trim());
-      if (empty) {
-        empty.setCustomValidity("Enter an answer in this box.");
-        empty.reportValidity();
-        return;
-      }
-    }
-
     const responses = inputs.map(input => input.value);
+    const revealed = responses.every(response => !response.trim());
     const result = {
       revealed,
       correct: revealed ? question.groups.map(() => false) : grade(question, responses)
@@ -287,17 +238,27 @@ function makeQuestion(id, index) {
 
   form.addEventListener("submit", event => {
     event.preventDefault();
-    record(false);
+    record();
   });
-  card.querySelector(".reveal").addEventListener("click", () => record(true));
   if (attempt.checked[id]) showResult(card, question, attempt.checked[id]);
   return card;
 }
 
 function renderQuestions() {
   const cards = document.createDocumentFragment();
-  attempt.order.forEach((id, index) => cards.append(makeQuestion(id, index)));
+  const firstByTopic = new Map();
+  attempt.order.forEach((id, index) => {
+    cards.append(makeQuestion(id, index));
+    const topic = bank[id].topic;
+    if (!firstByTopic.has(topic)) firstByTopic.set(topic, id);
+  });
   el("questions").replaceChildren(cards);
+  el("topics").replaceChildren(...[...new Set(bank.map(question => question.topic))].map(topic => {
+    const link = document.createElement("a");
+    link.href = "#item-" + firstByTopic.get(topic);
+    link.textContent = topic;
+    return link;
+  }));
   updateProgress();
 }
 
@@ -310,8 +271,9 @@ el("restart").addEventListener("click", () => {
 });
 
 el("retry").addEventListener("click", () => {
-  const missed = attempt.order.filter(id => !attempt.checked[id]?.correct.every(Boolean));
+  const missed = attempt.order.filter(id => attempt.checked[id] && !attempt.checked[id].correct.every(Boolean));
   if (!missed.length) return;
+  el("answer-summary").close();
   missed.forEach(id => {
     delete attempt.checked[id];
     delete attempt.drafts[id];

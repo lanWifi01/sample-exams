@@ -4,78 +4,47 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Financial Management Practice Exam</title>
-<style>
-:root{color-scheme:light;--paper:#fff;--background:#f1f4f5;--ink:#152b37;--muted:#475d67;--line:#cad7dd;--accent:#18536b;--correct:#1b623d;--wrong:#942d22;font-family:Inter,"Segoe UI",sans-serif}
-*{box-sizing:border-box}
-body{margin:0;background:var(--background);color:var(--ink);font-size:.94rem;line-height:1.45}
-main{max-width:1120px;margin:auto;padding:1.1rem clamp(.65rem,3vw,1.5rem) 2rem}
-h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.12;margin:0 0 .85rem}
-h2{font-size:1.15rem;margin:0}
-p{margin:0}
-section{margin-top:1.5rem;scroll-margin-top:1rem}
-.intro,.card,details,.table-wrap{background:var(--paper);border:1px solid var(--line);border-radius:.55rem}
-.intro{padding:1rem;border-top:.3rem solid var(--accent)}
-.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.5rem;margin-bottom:.65rem}
-.meta label{font-weight:600}
-nav{display:flex;flex-wrap:wrap;gap:.35rem .8rem;margin-top:.7rem}
-nav a{color:var(--accent);text-underline-offset:.17em}
-.section-header{display:flex;align-items:baseline;justify-content:space-between;gap:.5rem;margin-bottom:.35rem}
-.count,.directions{color:var(--muted)}
-.count{font-size:.82rem;white-space:nowrap}
-.directions{margin:0 0 .5rem}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:.5rem}
-.card{padding:.62rem .7rem;min-width:0;margin:0}
-.card legend{padding:0 .15rem;font-weight:650;max-width:100%}
-.options,.fields{display:grid;gap:.25rem .4rem;margin:.15rem 0 .35rem}
-.options{grid-template-columns:repeat(2,minmax(0,1fr))}
-.options label{display:flex;gap:.3rem;align-items:baseline;padding:.18rem .22rem;border-radius:.25rem;cursor:pointer}
-.options label:hover{background:#eef5f7}
-.options input{margin:0;accent-color:var(--accent);flex:none}
-.fields{grid-template-columns:repeat(2,minmax(0,1fr))}
-.fields label{display:grid;gap:.12rem}
-input:not([type=radio]),textarea{width:100%;border:1px solid var(--line);border-radius:.3rem;padding:.35rem .45rem;font:inherit;color:inherit;background:var(--paper)}
-textarea{resize:vertical;min-height:3.35rem}
-.single{display:block;margin:.22rem 0 .4rem}
-button{font:inherit;font-weight:650;border:1px solid var(--accent);border-radius:.3rem;background:var(--paper);color:var(--accent);padding:.24rem .55rem;cursor:pointer}
-button:hover{background:#e9f4f7}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.feedback{margin:.35rem 0 0;color:var(--muted)}
-.feedback[data-status=correct]{color:var(--correct)}
-.feedback[data-status=wrong]{color:var(--wrong)}
-.feedback:empty{display:none}
-.table-wrap{overflow-x:auto;margin:.5rem 0}
-table{width:100%;min-width:540px;border-collapse:collapse}
-caption{text-align:left;padding:.45rem .7rem;font-weight:700}
-th,td{padding:.26rem .7rem;border-bottom:1px solid var(--line);text-align:left}
-td:not(:first-child),thead th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
-thead,.group{background:#e9f1f4}
-tfoot td,tbody:last-child tr:last-child td,tbody:last-child tr:last-child th{border-bottom:0}
-tbody th{font-weight:500}
-.group th{font-size:.79rem;font-weight:700}
-details{margin:.65rem 0;padding:.48rem .65rem}
-details summary{color:var(--accent);font-weight:650;cursor:pointer}
-details[open] summary{margin-bottom:.45rem}
-pre{white-space:pre-wrap;font:inherit;margin:0}
-@media(max-width:700px){.grid{grid-template-columns:1fr}.meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:390px){.options{grid-template-columns:1fr}}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<main>
-<header class="intro">
+<body id="top">
+<header class="site-header">
+  <a class="skip-link button" href="#main-content">Skip to content</a>
+  <div class="shell site-bar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">E</span> Exams</a>
+    <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="AppDev.html">AppDev</a><a href="Finman.html" aria-current="page">Finman</a><a href="Stats.html">Stats</a></nav>
+    <button id="show-summary" class="button" type="button" aria-haspopup="dialog" aria-controls="answer-summary">Answer Summary</button>
+  </div>
+</header>
+<main class="shell" id="main-content" tabindex="-1">
+<header class="page-intro">
+  <p class="eyebrow">Finals reviewer</p>
   <h1>Financial Management Practice Exam</h1>
-  <div class="meta">
+  <div class="form-meta">
     <label>Name<input autocomplete="off"></label>
     <label>Date<input autocomplete="off"></label>
     <label>Course and Section<input autocomplete="off"></label>
     <label>Score<input id="score" value="0 / 80" readonly></label>
   </div>
   <p><strong>General instructions:</strong> <span id="general"></span></p>
-  <nav id="navigation" aria-label="Exam sections"></nav>
+  <nav class="section-nav" id="navigation" aria-label="Exam sections"></nav>
 </header>
 <div id="exam"></div>
 <noscript><p>Enable JavaScript to display the questions and check answers.</p></noscript>
+<footer class="review-footer"><small>Source · FINMAN-EXAM-FINALS</small><a href="#top">Back to top ↑</a></footer>
 </main>
+<dialog id="answer-summary" class="summary-dialog" aria-labelledby="answer-summary-title">
+  <header>
+    <h2 id="answer-summary-title">Answer Summary</h2>
+    <form method="dialog"><button type="submit">Close</button></form>
+  </header>
+  <p class="directions">The summary counts questions. A partial enumeration is listed under Wrong, and the exam score still awards credit for each correct entry. Bonus items appear in the summary.</p>
+  <dl class="summary-totals"><div><dt>Correct</dt><dd data-total="correct">0</dd></div><div><dt>Wrong</dt><dd data-total="wrong">0</dd></div><div><dt>Revealed</dt><dd data-total="revealed">0</dd></div><div><dt>Unchecked</dt><dd data-total="unchecked">0</dd></div></dl>
+  <h3>Wrong answers</h3>
+  <p class="summary-empty">No wrong answers yet.</p>
+  <ul hidden></ul>
+
+</dialog>
+<script src="review.js" defer></script>
 <script type="application/json" id="exam-data">
 {
   "title": "Financial Management Practice Exam",
@@ -893,7 +862,7 @@ function makeWorkField(caption) {
 }
 
 function makeOptions(id, choices) {
-  const group = element("div", undefined, { class: "options" });
+  const group = element("div", undefined, { class: "options", role: "radiogroup", "aria-labelledby": id + "-label" });
   choices.forEach(([value, caption]) => {
     const input = element("input", undefined, { type: "radio", name: id, value });
     const label = element("label");
@@ -928,8 +897,9 @@ function gradeList(values, accepted) {
 }
 
 function renderQuestion(item, id, scored = true) {
-  const card = element("fieldset", undefined, { class: "card" });
-  card.append(element("legend", (item.n ? item.n + ". " : "") + item.q));
+  const labelId = id + "-label";
+  const card = element("article", undefined, { class: "card", id, tabindex: "-1", "data-review-item": "", "aria-labelledby": labelId });
+  card.append(element("h3", (item.n ? item.n + ". " : "") + item.q, { id: labelId }));
   if (item.type === "choice") {
     card.append(makeOptions(id, item.options.map((choice, i) => [letters[i], letters[i].toLowerCase() + ") " + choice])));
   } else if (item.type === "truth" || item.type === "class") {
@@ -945,8 +915,11 @@ function renderQuestion(item, id, scored = true) {
     card.append(makeTextField("Answer", item.type === "budget" ? "decimal" : "text"));
   }
 
-  const feedback = element("p", undefined, { class: "feedback", role: "status", "aria-live": "polite" });
-  const button = element("button", "Check answer", { type: "button" });
+  const feedback = element("div", undefined, { class: "feedback", role: "status" });
+  const status = element("strong");
+  const solution = element("p");
+  const button = element("button", "Check answer", { type: "button", class: "primary", "aria-controls": id + "-feedback" });
+  feedback.id = id + "-feedback";
   const answerFields = [...card.querySelectorAll("input")];
 
   function check() {
@@ -972,15 +945,19 @@ function renderQuestion(item, id, scored = true) {
     }
 
     if (!hasAnswer) {
-      delete feedback.dataset.status;
-      feedback.textContent = "Answer: " + model;
+      card.dataset.reviewState = "revealed";
+      status.textContent = "Answer revealed";
+      solution.textContent = model || "No worked solution was provided.";
+      feedback.replaceChildren(status, solution);
       return;
     }
 
-    feedback.dataset.status = earned === possible ? "correct" : "wrong";
+    card.dataset.reviewState = earned === possible ? "correct" : "wrong";
     const result = item.type === "list" ? earned + " of " + possible + " correct." : earned ? "Correct." : "Incorrect.";
     const compare = card.querySelector("textarea") ? " Compare your written work with the explanation." : "";
-    feedback.textContent = result + " " + model + compare;
+    status.textContent = result;
+    solution.textContent = model + compare;
+    feedback.replaceChildren(status, solution);
     if (scored) {
       points.set(id, earned);
       updateScore();
@@ -988,15 +965,15 @@ function renderQuestion(item, id, scored = true) {
   }
 
   function clearResult() {
-    feedback.textContent = "";
-    delete feedback.dataset.status;
+    feedback.replaceChildren();
+    delete card.dataset.reviewState;
     if (scored && points.delete(id)) updateScore();
   }
 
   button.addEventListener("click", check);
-  answerFields.forEach(input => {
+  card.querySelectorAll("input, textarea").forEach(input => {
     input.addEventListener(input.type === "radio" ? "change" : "input", clearResult);
-    if (input.type !== "radio") {
+    if (input.tagName === "INPUT" && input.type !== "radio") {
       input.addEventListener("keydown", event => {
         if (event.key === "Enter") check();
       });
@@ -1061,8 +1038,6 @@ function renderAllocation() {
   questions.forEach(item => {
     const id = "allocation-" + item.n;
     const card = renderQuestion(item, id);
-    card.id = id;
-    card.tabIndex = -1;
     grid.append(card);
   });
   section.append(grid);
@@ -1094,7 +1069,8 @@ for (const section of exam.sections) {
 }
 renderAllocation();
 
-const key = element("details");
+const key = element("details", undefined, { id: "answer-key" });
+navigation.append(element("a", "Answer Key", { href: "#answer-key" }));
 key.append(element("summary", "Answer Key"), element("pre", exam.answerKey));
 container.append(key);
 </script>

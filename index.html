@@ -1,13 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exams</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exams | Reviewer Library</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <a href="AppDev.html">AppDev</a>
-    <a href="Finman.html">Finman</a>
-    <a href="Stats.html">Stats</a>
+<body class="home" id="top">
+<header class="site-header">
+  <a class="skip-link button" href="#main-content">Skip to content</a>
+  <div class="shell site-bar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">E</span> Exams</a>
+    <nav class="site-nav" aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="AppDev.html">AppDev</a><a href="Finman.html">Finman</a><a href="Stats.html">Stats</a></nav>
+
+  </div>
+</header>
+<main class="shell" id="main-content" tabindex="-1">
+  <header class="page-intro">
+    <p class="eyebrow">Reviewer library</p>
+    <h1>Practice exams</h1>
+    <p>Choose a subject, check answers as you go, and open the Answer Summary to revisit missed questions.</p>
+  </header>
+  <section aria-labelledby="subjects-title">
+    <h2 id="subjects-title">Subjects</h2>
+    <div class="subjects">
+      <a class="subject-card" href="AppDev.html">
+        <h3>Application Development</h3>
+        <p>314 questions · Identification, code and syntax, diagrams, and enumeration</p>
+        <span class="open">Open AppDev <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="subject-card" href="Finman.html">
+        <h3>Financial Management</h3>
+        <p>80 points · Classification, multiple choice, identification, and more</p>
+        <span class="open">Open Finman <span aria-hidden="true">→</span></span>
+      </a>
+      <a class="subject-card" href="Stats.html">
+        <h3>Statistical Analysis</h3>
+        <p>143 questions · Midterm and finals identification, enumeration, and computation</p>
+        <span class="open">Open Stats <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+</main>
 </body>
 </html>
