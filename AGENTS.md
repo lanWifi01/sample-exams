@@ -7,3 +7,4 @@ Use this default layout for HTML reviewers in this project unless the user reque
 - Every answer must can be checked even if the input is blank.
 - Always save the HTML file created in this folder and rename it to this format (Subject.html).
 - Add a button for summary of correct and wrong answers.
+- Skip testing

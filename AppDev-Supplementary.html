@@ -1,0 +1,1229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AppDev Supplementary Exam Practice</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="review.js" defer></script>
+</head>
+<body id="top">
+<header class="site-header">
+  <a class="skip-link button" href="#main-content">Skip to content</a>
+  <div class="shell site-bar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">E</span> Exams</a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a><a href="AppDev.html">AppDev</a><a href="AppDev-Supplementary.html" aria-current="page">AppDev Supplementary</a><a href="Finman.html">Finman</a><a href="Stats.html">Stats</a>
+    </nav>
+    <button id="show-summary" class="button" type="button" aria-haspopup="dialog" aria-controls="answer-summary">Answer Summary</button>
+  </div>
+</header>
+<main class="shell" id="main-content" tabindex="-1">
+  <header class="page-intro">
+    <h1>AppDev Supplementary Exam Practice</h1>
+    <p>80 one-line coding questions on JavaScript, CSS, and ReactJS. Questions 1&ndash;10 are from the instructor. Questions 11&ndash;80 are for extra practice. Treat each item independently and assume referenced variables and components already exist.</p>
+    <p>Use the exact names, capitalization, brackets, and semicolons shown in the model answers. The checker accepts common formatting variations and straight single or double quotes where both work. Compare any other valid version with the model answer.</p>
+    <nav class="section-nav" aria-label="Reviewer sections">
+      <a href="#instructor">Instructor questions</a><a href="#practice">Slide-based practice</a><a href="#extra-practice">Extra slide practice</a><a href="#slides">Study slides</a>
+    </nav>
+  </header>
+  <div class="progress-panel">
+    <div class="progress-row"><span id="progress-label">Checked 0 / 80</span><span id="score" role="status">0 correct · 0 wrong</span></div>
+    <progress id="progress" max="80" value="0" aria-labelledby="progress-label"></progress>
+  </div>
+  <section id="instructor" class="part" aria-labelledby="instructor-title">
+    <h2 id="instructor-title">Instructor questions <small>1–10</small></h2>
+    <div class="question-grid">
+    <article class="question" id="q1" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-1">1. Write the statement that declares a variable named myName with the value &quot;Alice&quot; using let.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-1" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>let myName = &quot;Alice&quot;;</code></pre>
+        <p class="explanation"><code>let</code> declares a variable that can be reassigned. Use straight quotes around the string. <small>(JS exercise 1)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q2" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-2">2. Write the statement that creates an object named aboutMe with name set to &quot;Alice&quot; and age set to 20.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-2" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const aboutMe = { name: &quot;Alice&quot;, age: 20 };</code></pre>
+        <p class="explanation">An object literal uses braces, colons between keys and values, and commas between properties. Only the name value is a string. <small>(JS exercise 4)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q3" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-3">3. Write the for loop that logs the numbers 1 to 5 using the variable i.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-3" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>for (let i = 1; i &lt;= 5; i++) { console.log(i); }</code></pre>
+        <p class="explanation">The condition includes 5. The update <code>i++</code> adds one after each iteration. <small>(JS exercise 6)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q4" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-4">4. Write an arrow function named greet that takes name and returns &quot;Hello, &quot; + name using an implicit return.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-4" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const greet = name =&gt; &quot;Hello, &quot; + name;</code></pre>
+        <p class="explanation">An arrow function with a single expression after <code>=&gt;</code> returns that expression automatically. Keep the trailing space inside the greeting string. <small>(JS exercise 11)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q5" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-5">5. Write the statement that creates liked by using .map() on favoriteFoods to turn each food into &quot;I like &quot; + food.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-5" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const liked = favoriteFoods.map(food =&gt; &quot;I like &quot; + food);</code></pre>
+        <p class="explanation"><code>.map()</code> produces a new array from the callback’s return value. The space after <code>like</code> separates it from the food name. <small>(JS exercise 5)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q6" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-6">6. Write the ruleset for the class title that sets the font size to 32px.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-6" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.title { font-size: 32px; }</code></pre>
+        <p class="explanation">The leading dot selects an element with the class <code>title</code>. The <code>px</code> unit is attached directly to <code>32</code>. <small>(React exercise 18)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q7" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-7">7. Write the ruleset for :root that defines a CSS variable named --color-primary with the value #5b86e5.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-7" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>:root { --color-primary: #5b86e5; }</code></pre>
+        <p class="explanation"><code>:root</code> defines a custom property that styles elsewhere can read. Custom property names start with <code>--</code>. <small>(CSS slide 5)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q8" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-8">8. Write the statement that imports the default export Title from ./components/Title.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-8" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>import Title from &quot;./components/Title&quot;;</code></pre>
+        <p class="explanation">A default import names the local binding directly. The quoted relative path starts with <code>./</code>. <small>(React exercise 2)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q9" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-9">9. Write the JSX paragraph that shows ©, then the variable year, then the text Anong WISH mo?.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-9" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;p&gt;© {year} Anong WISH mo?&lt;/p&gt;</code></pre>
+        <p class="explanation">JSX braces evaluate <code>year</code>. The copyright symbol and the words around the expression are rendered as text. <small>(React exercise 12)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q10" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-10">10. Write the &lt;h1&gt; element with the text Wish 107.5 Playlist and the class title applied using className.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-10" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;h1 className=&quot;title&quot;&gt;Wish 107.5 Playlist&lt;/h1&gt;</code></pre>
+        <p class="explanation">React uses <code>className</code> to assign a CSS class in JSX. A literal class name goes in quotes. <small>(React exercise 18)</small></p>
+      </div>
+    </article>
+    </div>
+  </section>
+  <section id="practice" class="part" aria-labelledby="practice-title">
+    <h2 id="practice-title">Slide-based practice <small>11–50</small></h2>
+    <div class="question-grid">
+    <article class="question" id="q11" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-11">11. Declare a constant named age with the numeric value 25.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-11" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const age = 25;</code></pre>
+        <p class="explanation"><code>const</code> needs an initializer. The unquoted <code>25</code> is a number. <small>(JS exercise 10)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q12" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-12">12. Log the data type of the existing variable isStudent using typeof.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-12" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>console.log(typeof isStudent);</code></pre>
+        <p class="explanation"><code>typeof</code> evaluates to a string describing the operand’s type. Pass that expression to <code>console.log()</code>. <small>(JS exercise 2)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q13" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-13">13. Log the result of strictly comparing the number 5 with the string &quot;5&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-13" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>console.log(5 === &quot;5&quot;);</code></pre>
+        <p class="explanation"><code>===</code> compares type as well as value. This expression logs <code>false</code> because one operand is a number and the other is a string. <small>(JS exercise 9)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q14" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-14">14. Create priya by using .find() on students to get the first student whose name is &quot;Priya&quot;. Use s as the parameter.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-14" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const priya = students.find(s =&gt; s.name === &quot;Priya&quot;);</code></pre>
+        <p class="explanation"><code>.find()</code> returns the first element that satisfies the callback. Test the current student’s <code>name</code>. <small>(JS exercise 20)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q15" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-15">15. Declare calculator(a, b) as a regular function that returns an object with sum equal to a + b and product equal to a * b.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-15" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>function calculator(a, b) { return { sum: a + b, product: a * b }; }</code></pre>
+        <p class="explanation"><code>return</code> sends back one object that contains both the computed sum and product. <small>(JS exercise 3)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q16" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-16">16. Add a hobby property with the value &quot;Drawing&quot; to the existing aboutMe object.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-16" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>aboutMe.hobby = &quot;Drawing&quot;;</code></pre>
+        <p class="explanation">An assignment to <code>aboutMe.hobby</code> creates or updates that property on the existing object. <small>(JS exercise 4)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q17" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-17">17. Add &quot;Ice Cream&quot; to the end of favoriteFoods using .push().</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-17" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>favoriteFoods.push(&quot;Ice Cream&quot;);</code></pre>
+        <p class="explanation"><code>.push()</code> appends a value to the end of the existing array. <small>(JS exercise 5)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q18" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-18">18. Remove the first item from favoriteFoods using .shift().</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-18" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>favoriteFoods.shift();</code></pre>
+        <p class="explanation"><code>.shift()</code> removes and returns the first array element. <small>(JS exercise 5)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q19" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-19">19. Write a for...of loop that logs each item in favoriteFoods. Use const food as the loop variable.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-19" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>for (const food of favoriteFoods) { console.log(food); }</code></pre>
+        <p class="explanation"><code>for...of</code> iterates over values. Each iteration binds the current array element to <code>food</code>. <small>(JS exercise 5)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q20" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-20">20. Write an if/else statement that logs &quot;Pass&quot; when score is at least 70, otherwise logs &quot;Fail&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-20" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>if (score &gt;= 70) { console.log(&quot;Pass&quot;); } else { console.log(&quot;Fail&quot;); }</code></pre>
+        <p class="explanation"><code>&gt;=</code> includes a score of exactly 70. The <code>else</code> block runs when the test is false. <small>(JS exercise 6)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q21" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-21">21. Assume count is already 0. Write a while loop that logs &quot;Hello&quot; while count is below 3 and increments count each time.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-21" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>while (count &lt; 3) { console.log(&quot;Hello&quot;); count++; }</code></pre>
+        <p class="explanation">The condition is checked before each iteration. Incrementing <code>count</code> after logging makes the loop run for counts 0, 1, and 2. <small>(JS exercise 6)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q22" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-22">22. Store the element whose ID is changeColorBtn in a constant named button.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-22" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const button = document.getElementById(&quot;changeColorBtn&quot;);</code></pre>
+        <p class="explanation"><code>getElementById()</code> takes the bare ID string. The <code>#</code> prefix belongs to a CSS ID selector. <small>(JS exercise 7)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q23" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-23">23. Add a click event listener to button with an arrow callback that logs &quot;Clicked&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-23" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>button.addEventListener(&quot;click&quot;, () =&gt; console.log(&quot;Clicked&quot;));</code></pre>
+        <p class="explanation"><code>addEventListener()</code> takes the event name and a callback that runs when the event fires. <small>(JS exercise 7)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q24" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-24">24. Use setTimeout with an arrow callback to log &quot;Hello&quot; after 2000 milliseconds.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-24" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>setTimeout(() =&gt; console.log(&quot;Hello&quot;), 2000);</code></pre>
+        <p class="explanation"><code>setTimeout()</code> takes a callback and a delay in milliseconds. A delay of <code>2000</code> is two seconds. <small>(JS exercises 7 and 22)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q25" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-25">25. Use const and object destructuring to extract name and age from the existing student object.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-25" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const { name, age } = student;</code></pre>
+        <p class="explanation">The braces on the left extract properties into variables with the same names. <small>(JS exercises 8 and 12)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q26" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-26">26. Create newNumbers as a new array containing every item from numbers followed by 4 and 5, using spread.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-26" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const newNumbers = [...numbers, 4, 5];</code></pre>
+        <p class="explanation">Spread expands <code>numbers</code> into individual elements in a new array. The literals <code>4</code> and <code>5</code> follow those elements. <small>(JS exercise 13)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q27" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-27">27. Declare sum(...args) as a regular function that returns args.reduce() with (total, n) =&gt; total + n and an initial value of 0.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-27" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>function sum(...args) { return args.reduce((total, n) =&gt; total + n, 0); }</code></pre>
+        <p class="explanation">The rest parameter collects arguments into <code>args</code>. <code>reduce()</code> starts at <code>0</code> and adds each argument to the running total. <small>(JS exercise 13)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q28" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-28">28. Declare a Person class whose constructor receives name and assigns it to this.name.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-28" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>class Person { constructor(name) { this.name = name; } }</code></pre>
+        <p class="explanation">The constructor takes <code>name</code> and assigns it to the new instance’s <code>name</code> property via <code>this</code>. <small>(JS exercise 14)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q29" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-29">29. Create canLogIn as a constant that is true only when username and password are both not equal to the empty string. Use !== and &amp;&amp;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-29" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const canLogIn = username !== &quot;&quot; &amp;&amp; password !== &quot;&quot;;</code></pre>
+        <p class="explanation">Each <code>!==</code> test checks one field against an empty string. <code>&amp;&amp;</code> requires both tests to be true. <small>(JS exercise 17)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q30" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-30">30. Assume user exists but user.address may be missing. Create city from user.address.city using optional chaining and the nullish fallback &quot;Unknown&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-30" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const city = user.address?.city ?? &quot;Unknown&quot;;</code></pre>
+        <p class="explanation"><code>?.</code> safely reads <code>city</code> if the address exists. <code>??</code> supplies the fallback when the result is <code>null</code> or <code>undefined</code>. <small>(JS exercise 18)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q31" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-31">31. Create passing by filtering students to keep grades of at least 60. Use s as the callback parameter.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-31" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const passing = students.filter(s =&gt; s.grade &gt;= 60);</code></pre>
+        <p class="explanation"><code>.filter()</code> returns an array of all students whose grade passes the callback’s inclusive threshold. <small>(JS exercise 20)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q32" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-32">32. Convert the existing user object into a JSON string and store it in a constant named jsonString.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-32" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const jsonString = JSON.stringify(user);</code></pre>
+        <p class="explanation"><code>JSON.stringify()</code> serializes the object to a string. It takes the existing <code>user</code> object as its argument. <small>(JS exercise 21)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q33" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-33">33. Write a body ruleset that sets background to the CSS variable --color-primary using var().</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-33" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>body { background: var(--color-primary); }</code></pre>
+        <p class="explanation"><code>var()</code> reads the declared custom property. Its name inside the parentheses includes the two leading dashes. <small>(CSS slide 6)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q34" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-34">34. Write the universal-selector reset that sets box-sizing to border-box, margin to 0, and padding to 0.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-34" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>* { box-sizing: border-box; margin: 0; padding: 0; }</code></pre>
+        <p class="explanation"><code>*</code> selects every element. <code>border-box</code> includes padding and borders in the declared dimensions, and the two zero declarations reset spacing. <small>(CSS slides 7 and 21)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q35" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-35">35. Make .page a flex container with column direction, centered cross-axis alignment, and a 16px gap.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-35" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.page { display: flex; flex-direction: column; align-items: center; gap: 16px; }</code></pre>
+        <p class="explanation"><code>flex-direction: column</code> stacks items vertically. <code>align-items: center</code> centers them horizontally, and <code>gap</code> sets their spacing. <small>(React exercise 20; CSS slide 24)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q36" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-36">36. Make body a grid container with place-items set to center and a minimum height of 100vh.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-36" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>body { display: grid; place-items: center; min-height: 100vh; }</code></pre>
+        <p class="explanation"><code>place-items: center</code> centers grid items on both axes. <code>100vh</code> sets the minimum height to one viewport height. <small>(CSS slide 26)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q37" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-37">37. Write a .login ruleset that sets width to 86vw, height to 82vh, and overflow to hidden.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-37" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.login { width: 86vw; height: 82vh; overflow: hidden; }</code></pre>
+        <p class="explanation"><code>vw</code> and <code>vh</code> refer to viewport width and height. <code>overflow: hidden</code> clips content that exceeds the box. <small>(CSS slides 16, 27 and 31)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q38" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-38">38. Round only the top-left and bottom-left corners of .right to 60px using the four-value border-radius shorthand.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-38" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.right { border-radius: 60px 0 0 60px; }</code></pre>
+        <p class="explanation">The four <code>border-radius</code> values go clockwise from top-left: top-left, top-right, bottom-right, bottom-left. <small>(CSS slide 28)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q39" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-39">39. Set the placeholder text color of inputs inside .form to var(--color-placeholder).</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-39" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.form input::placeholder { color: var(--color-placeholder); }</code></pre>
+        <p class="explanation">The descendant selector reaches inputs inside <code>.form</code>. The <code>::placeholder</code> pseudo-element targets their placeholder text. <small>(CSS slides 18 and 32)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q40" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-40">40. When an input inside .form has focus, set its border-bottom-color to var(--color-primary).</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-40" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.form input:focus { border-bottom-color: var(--color-primary); }</code></pre>
+        <p class="explanation">The descendant selector reaches inputs inside <code>.form</code>. The <code>:focus</code> pseudo-class applies while an input has focus. <small>(CSS slides 18 and 32)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q41" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-41">41. Write a media query that hides .left with display: none when the viewport width is at most 900px.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-41" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>@media (max-width: 900px) { .left { display: none; } }</code></pre>
+        <p class="explanation"><code>max-width: 900px</code> includes 900px and smaller widths. The nested rule hides <code>.left</code> in that range. <small>(CSS slides 19 and 33)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q42" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-42">42. Declare a function component named Title that returns &lt;h1&gt;Wish 107.5 Playlist&lt;/h1&gt;. Do not include an export.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-42" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>function Title() { return &lt;h1&gt;Wish 107.5 Playlist&lt;/h1&gt;; }</code></pre>
+        <p class="explanation">React components have capitalized names. This function returns the heading as JSX. <small>(React exercise 1)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q43" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-43">43. Export the existing Title component as the default export.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-43" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>export default Title;</code></pre>
+        <p class="explanation"><code>export default</code> makes the existing <code>Title</code> binding available as the module’s default export. <small>(React exercises 1 and 8)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q44" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-44">44. Import the named exports PLAYLIST_NAME and CURATOR from ../constants.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-44" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>import { PLAYLIST_NAME, CURATOR } from &quot;../constants&quot;;</code></pre>
+        <p class="explanation">Named imports go inside braces and use the exported names. <code>../</code> moves one directory up. <small>(React exercise 9)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q45" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-45">45. Declare and export the named constant PLAYLIST_NAME with the string value &quot;APPDEV1 Music Mix&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-45" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>export const PLAYLIST_NAME = &quot;APPDEV1 Music Mix&quot;;</code></pre>
+        <p class="explanation"><code>export const</code> declares a constant and exposes it by name to other modules. <small>(React exercise 9)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q46" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-46">46. Write a JSX Fragment containing &lt;Header /&gt; followed by &lt;Footer /&gt; without adding a div.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-46" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;&gt;&lt;Header /&gt;&lt;Footer /&gt;&lt;/&gt;</code></pre>
+        <p class="explanation">The shorthand Fragment groups the two siblings without a DOM wrapper. Each component is written as a self-closing tag. <small>(React exercises 3 and 5)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q47" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-47">47. Write a JSX paragraph that displays plays multiplied by 3, followed by the text plays across 3 devices.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-47" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;p&gt;{plays * 3} plays across 3 devices&lt;/p&gt;</code></pre>
+        <p class="explanation">Braces evaluate the arithmetic expression. The words after the braces are JSX text. <small>(React exercise 14)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q48" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-48">48. Write a JSX paragraph that displays &quot;Listening live now.&quot; if isLive is true, otherwise &quot;Playing from your saved queue.&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-48" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;p&gt;{isLive ? &quot;Listening live now.&quot; : &quot;Playing from your saved queue.&quot;}&lt;/p&gt;</code></pre>
+        <p class="explanation">Inside the JSX braces, the ternary selects the first string when <code>isLive</code> is true and the second string when it is false. <small>(React exercise 15)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q49" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-49">49. Import ./Login.module.css into an object named styles.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-49" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>import styles from &quot;./Login.module.css&quot;;</code></pre>
+        <p class="explanation">A CSS Module import exposes an object whose properties refer to locally scoped class names. <small>(CSS slide 14)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q50" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-50">50. Write an empty JSX div with the login class from the imported styles object.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-50" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;div className={styles.login}&gt;&lt;/div&gt;</code></pre>
+        <p class="explanation"><code>className={styles.login}</code> reads the module’s generated class name. An empty JSX element may also use a self-closing tag. <small>(CSS slide 14)</small></p>
+      </div>
+    </article>
+    </div>
+  </section>
+  <section id="extra-practice" class="part" aria-labelledby="extra-practice-title">
+    <h2 id="extra-practice-title">Extra slide practice <small>51&ndash;80</small></h2>
+    <div class="question-grid">
+    <article class="question" id="q51" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-51">51. Set the inline background color of the document’s body to the value of the existing color variable.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-51" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>document.body.style.backgroundColor = color;</code></pre>
+        <p class="explanation">The DOM style object uses camelCase for CSS property names. <small>(JavaScript slide 31)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q52" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-52">52. Use array destructuring and const to store the first two values of hobbies in hobby1 and hobby2.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-52" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const [hobby1, hobby2] = hobbies;</code></pre>
+        <p class="explanation">Array destructuring assigns values according to their position. <small>(JavaScript slide 53)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q53" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-53">53. Use object spread to create const newUser from user and set its email to &quot;alex@example.com&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-53" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const newUser = { ...user, email: &quot;alex@example.com&quot; };</code></pre>
+        <p class="explanation">The property after the spread sets or replaces the email on the new object. <small>(JavaScript slide 57)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q54" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-54">54. Declare an empty Student class that inherits from the existing Person class.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-54" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>class Student extends Person {}</code></pre>
+        <p class="explanation">The extends keyword establishes inheritance from Person. <small>(JavaScript slides 60–61)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q55" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-55">55. Create const canWatch using logical OR, with isAdmin on the left and isSubscriber on the right.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-55" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const canWatch = isAdmin || isSubscriber;</code></pre>
+        <p class="explanation">Logical OR lets either condition allow access. <small>(JavaScript slide 73)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q56" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-56">56. Create const clean by removing leading and trailing whitespace from the string raw.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-56" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const clean = raw.trim();</code></pre>
+        <p class="explanation">trim() returns a new string with whitespace removed from both ends. <small>(JavaScript slide 83)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q57" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-57">57. Use Number.isNaN() to log whether the existing variable result holds the NaN value.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-57" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>console.log(Number.isNaN(result));</code></pre>
+        <p class="explanation">Number.isNaN() tests for the actual NaN value without converting its argument. <small>(JavaScript slide 85)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q58" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-58">58. Log whether at least one student in students has a grade below 60. Use .some() and name the callback parameter s.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-58" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>console.log(students.some(s =&gt; s.grade &lt; 60));</code></pre>
+        <p class="explanation">some() returns true once it finds a matching student. <small>(JavaScript slide 89)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q59" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-59">59. Use array spread and .sort() to create const ranked from students in descending order by grade. Use a and b as the comparator parameters.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-59" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const ranked = [...students].sort((a, b) =&gt; b.grade - a.grade);</code></pre>
+        <p class="explanation">Spread copies the array before sort() changes its order. Subtracting a’s grade from b’s orders higher grades first. <small>(JavaScript slide 89)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q60" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-60">60. Throw a new Error with the message &quot;Cannot divide by zero&quot;.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-60" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>throw new Error(&quot;Cannot divide by zero&quot;);</code></pre>
+        <p class="explanation">throw interrupts normal execution and passes the Error to the nearest matching catch block. <small>(JavaScript slide 93)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q61" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-61">61. Parse the JSON string jsonString into a constant named parsedUser.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-61" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const parsedUser = JSON.parse(jsonString);</code></pre>
+        <p class="explanation">JSON.parse() converts JSON text back into a JavaScript value. <small>(JavaScript slide 95)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q62" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">JavaScript</p>
+      <h3 class="prompt" id="prompt-62">62. Inside an async function, await fetch() for &quot;/api/songs&quot; and save the response in const res.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-62" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const res = await fetch(&quot;/api/songs&quot;);</code></pre>
+        <p class="explanation">await waits for fetch() to resolve. The result is a Response object. <small>(JavaScript slide 96)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q63" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-63">63. Write a .right ruleset using the flex shorthand with the value 1.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-63" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.right { flex: 1; }</code></pre>
+        <p class="explanation">flex: 1 lets this flex item take up available space. <small>(CSS slides 16 and 25)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q64" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-64">64. Write a .signup ruleset that adds 24px of margin above the element.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-64" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.signup { margin-top: 24px; }</code></pre>
+        <p class="explanation">margin-top adds space outside the element’s top edge. <small>(CSS slide 22)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q65" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-65">65. For the existing flex container .socials, use justify-content to distribute items with space between them and use gap to set the gap to 24px.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-65" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.socials { justify-content: space-between; gap: 24px; }</code></pre>
+        <p class="explanation">space-between distributes available main-axis space between items. gap sets their minimum separation. <small>(CSS slide 25)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q66" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-66">66. Write a .logo ruleset that uses a height of 30vh and caps the height at 304px.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-66" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.logo { height: 30vh; max-height: 304px; }</code></pre>
+        <p class="explanation">height sets the viewport-based size and max-height caps it. <small>(CSS slide 27)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q67" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-67">67. Give .socialBtn a 1px solid border using the --color-primary custom property. Use the border shorthand in width, style, color order.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-67" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.socialBtn { border: 1px solid var(--color-primary); }</code></pre>
+        <p class="explanation">The border shorthand combines width, style, and color. var() reads the color token. <small>(CSS slide 29)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q68" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-68">68. Write a .tagline ruleset that reads --font-size-tagline for its font size and --font-weight-regular for its font weight.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-68" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.tagline { font-size: var(--font-size-tagline); font-weight: var(--font-weight-regular); }</code></pre>
+        <p class="explanation">The two custom properties control text size and thickness independently. <small>(CSS slide 30)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q69" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-69">69. Give .song-card 12px of padding on all sides and 8px of vertical margin with zero horizontal margin. Use the padding and margin shorthands.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-69" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>.song-card { padding: 12px; margin: 8px 0; }</code></pre>
+        <p class="explanation">One padding value applies to all sides. With two margin values, the first sets top and bottom and the second sets left and right. <small>(React Quick Start slide 64)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q70" tabindex="-1" data-review-item data-syntax="css">
+      <p class="meta">CSS</p>
+      <h3 class="prompt" id="prompt-70">70. Write a body ruleset that sets font-family to sans-serif, background-color to #121212, and color to #f4f4f4.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-70" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>body { font-family: sans-serif; background-color: #121212; color: #f4f4f4; }</code></pre>
+        <p class="explanation">background-color paints the page background. color sets the text color. <small>(React Quick Start slide 58)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q71" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-71">71. Declare a Divider function component that returns a self-closing horizontal rule. Do not include an export.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-71" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>function Divider() { return &lt;hr /&gt;; }</code></pre>
+        <p class="explanation">A component can return one self-closing JSX element. <small>(React Quick Start slide 25)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q72" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-72">72. From components/tracks/SongList.jsx, import the default Divider component from ../Divider.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-72" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>import Divider from &quot;../Divider&quot;;</code></pre>
+        <p class="explanation">../ moves up from tracks to the parent components directory. <small>(React Quick Start slide 38)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q73" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-73">73. Write a JSX paragraph that displays the return value of hype(&quot;now playing&quot;).</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-73" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;p&gt;{hype(&quot;now playing&quot;)}&lt;/p&gt;</code></pre>
+        <p class="explanation">A function call goes inside JSX braces to render the value it returns. <small>(React Quick Start slide 54)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q74" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-74">74. In App.jsx, load ./App.css with a side-effect import.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-74" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>import &quot;./App.css&quot;;</code></pre>
+        <p class="explanation">A side-effect import supplies only the path. No local variable is created. <small>(React Quick Start slide 59)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q75" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-75">75. Wrap a self-closing SongOne component in a JSX div with the class song-card.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-75" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;div className=&quot;song-card&quot;&gt;&lt;SongOne /&gt;&lt;/div&gt;</code></pre>
+        <p class="explanation">Use className for the wrapper’s CSS class and nest SongOne between the div tags. <small>(React Quick Start slide 65)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q76" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-76">76. Write a JSX paragraph that displays PLAYLIST_NAME, the text &quot; by &quot;, and CURATOR using one template literal.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-76" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;p&gt;{`${PLAYLIST_NAME} by ${CURATOR}`}&lt;/p&gt;</code></pre>
+        <p class="explanation">Backticks mark the template literal. Each JavaScript value is inserted with ${...}. <small>(React Quick Start slide 45)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q77" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-77">77. Write a JSX paragraph that displays the current year using new Date() and getFullYear().</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-77" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;p&gt;{new Date().getFullYear()}&lt;/p&gt;</code></pre>
+        <p class="explanation">getFullYear() returns the year from the current Date object. <small>(React Quick Start slide 53)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q78" tabindex="-1" data-review-item data-syntax="js">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-78">78. Assume useState is imported. Declare count and setCount using const, array destructuring, and useState with an initial value of 0.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-78" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>const [count, setCount] = useState(0);</code></pre>
+        <p class="explanation">useState returns the state value followed by its setter. <small>(JavaScript to React slide 46)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q79" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-79">79. Write a self-closing JSX input whose onChange arrow callback passes e.target.value to setValue. Use e as the callback parameter.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-79" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;input onChange={e =&gt; setValue(e.target.value)} /&gt;</code></pre>
+        <p class="explanation">The change event’s target provides the input’s current value. <small>(JavaScript to React slide 50)</small></p>
+      </div>
+    </article>
+    <article class="question" id="q80" tabindex="-1" data-review-item data-syntax="jsx">
+      <p class="meta">ReactJS</p>
+      <h3 class="prompt" id="prompt-80">80. Write a JSX button labeled +1 whose onClick arrow callback calls setCount with count + 1.</h3>
+      <form class="response">
+        <input type="text" aria-labelledby="prompt-80" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
+        <button type="submit">Check answer</button>
+      </form>
+      <div class="result" aria-live="polite" hidden>
+        <p class="status"></p>
+        <pre><code>&lt;button onClick={() =&gt; setCount(count + 1)}&gt;+1&lt;/button&gt;</code></pre>
+        <p class="explanation">React calls the arrow function on click. The function passes the next count to the setter. <small>(JavaScript to React slide 50)</small></p>
+      </div>
+    </article>
+    </div>
+  </section>
+  <section id="slides" class="part" aria-labelledby="slides-title">
+    <h2 id="slides-title">Study slides</h2>
+    <ul>
+      <li><a href="https://chatgpt.com/library?file_id=libfile_7b2403bb70dc8191b0c6ea239e22963c&amp;account_id=personal">JavaScript Fundamentals and the React Bridge</a></li>
+      <li><a href="https://chatgpt.com/library?file_id=libfile_f5aba1c8a3b88191baa6d88b3f8206c1&amp;account_id=personal">React Styling Fundamentals</a></li>
+      <li><a href="https://chatgpt.com/library?file_id=libfile_e44c6936aeb0819182b0599d90f50a8c&amp;account_id=personal">React Quick Start</a></li>
+    </ul>
+  </section>
+  <footer class="review-footer">
+    <a href="#top">Back to top</a>
+    <button id="retry" type="button">Reset answers</button>
+  </footer>
+</main>
+<dialog id="answer-summary" class="summary-dialog" aria-labelledby="summary-title">
+  <header>
+    <h2 id="summary-title">Answer Summary</h2>
+    <form method="dialog"><button>Close</button></form>
+  </header>
+  <dl class="summary-totals">
+    <div><dt>Correct</dt><dd data-total="correct">0</dd></div>
+    <div><dt>Wrong</dt><dd data-total="wrong">0</dd></div>
+    <div><dt>Unscored</dt><dd data-total="unchecked">80</dd></div>
+  </dl>
+  <h3>Wrong answers to revisit</h3>
+  <p class="summary-empty">No wrong answers to revisit.</p>
+  <ul hidden></ul>
+</dialog>
+<script>
+(() => {
+  const cards = [...document.querySelectorAll("[data-review-item]")];
+  const progress = document.getElementById("progress");
+  const progressLabel = document.getElementById("progress-label");
+  const score = document.getElementById("score");
+  const alternatives = {
+    q3: ["for (let i = 1; i <= 5; ++i) { console.log(i); }"],
+    q4: ['const greet = (name) => "Hello, " + name;'],
+    q5: ['const liked = favoriteFoods.map((food) => "I like " + food);'],
+    q12: ["console.log(typeof(isStudent));"],
+    q13: ['console.log("5" === 5);'],
+    q14: ['const priya = students.find((s) => s.name === "Priya");'],
+    q16: ['aboutMe["hobby"] = "Drawing";'],
+    q21: ['while (count < 3) { console.log("Hello"); ++count; }', 'while (count < 3) { console.log("Hello"); count += 1; }'],
+    q22: ['const button = document.querySelector("#changeColorBtn");'],
+    q23: ['button.addEventListener("click", () => { console.log("Clicked"); });'],
+    q24: ['setTimeout(() => { console.log("Hello"); }, 2000);'],
+    q25: ["const { age, name } = student;"],
+    q31: ["const passing = students.filter((s) => s.grade >= 60);"],
+    q44: ['import { CURATOR, PLAYLIST_NAME } from "../constants";'],
+    q46: ["<Fragment><Header /><Footer /></Fragment>"],
+    q50: ["<div className={styles.login} />", '<div className={styles["login"]} />', '<div className={styles["login"]}></div>'],
+    q58: ["console.log(students.some((s) => s.grade < 60));"],
+    q71: ["function Divider() { return (<hr />); }"],
+    q75: ["<div className={'song-card'}><SongOne /></div>"],
+    q79: ["<input onChange={(e) => setValue(e.target.value)} />","<input onChange={e => { setValue(e.target.value); }} />","<input onChange={(e) => { setValue(e.target.value); }} />"],
+    q80: ["<button onClick={() => { setCount(count + 1); }}>+1</button>"]
+  };
+  const patterns = {
+    js: /(?<string>"[^"\\\r\n]*"|'[^'\\\r\n]*')|[A-Za-z_$][\w$]*|\d+(?:\.\d+)?|===|!==|=>|\+\+|\+=|>=|<=|&&|\|\||\?\.|\?\?|\.\.\.|\S/g,
+    css: /var\(|[.#][\w-]+|--[\w-]+|\d+(?:\.\d+)?(?:[a-zA-Z]+|%)?|[A-Za-z_][\w-]*|::|\S/g,
+    jsx: /(?<text>(?<!=>)(?<=[>}])[^<>{}\r\n]+(?=[<{]))|(?<template>\x60[^\x60\\\r\n]*\x60)|(?<string>"[^"\\\r\n]*"|'[^'\\\r\n]*')|<\/?[A-Za-z][\w-]*|<\/?>|\/>|=>|[A-Za-z_$][\w$]*|\d+(?:\.\d+)?|\S/g
+  };
+
+  function tokens(code, syntax, id) {
+    return [...code.matchAll(patterns[syntax])].flatMap(({ 0: token, groups }) => {
+      if (groups?.string) return ['"' + token.slice(1, -1) + '"'];
+      if (groups?.template) return [token.replace(/(\$\{)\s*([A-Za-z_$][\w$]*)\s*(\})/g, "$1$2$3")];
+      if (groups?.text && !token.trim() && ["q46", "q75"].includes(id)) return [];
+      return [token];
+    });
+  }
+
+  function normalize(code, syntax, id) {
+    if (syntax !== "css") return JSON.stringify(tokens(code, syntax, id));
+    const selector = code.slice(0, code.indexOf("{")).trim();
+    if (id === "q7" && selector !== ":root") return null;
+    if (id === "q39" && !/^\.form\s+input::placeholder$/.test(selector)) return null;
+    if (id === "q40" && !/^\.form\s+input:focus$/.test(selector)) return null;
+    if (["q34", "q35", "q36", "q37", "q65", "q66", "q68", "q69", "q70"].includes(id)) {
+      const rule = code.match(/^([^{}]+)\{([^{}]+);\s*\}$/);
+      if (!rule) return null;
+      const declarations = rule[2].split(";").map(part => JSON.stringify(tokens(part, syntax, id)));
+      return JSON.stringify([tokens(rule[1], syntax, id), declarations.sort()]);
+    }
+    return JSON.stringify(tokens(code, syntax, id));
+  }
+
+  function updateScore() {
+    const correct = cards.filter(card => card.dataset.reviewState === "correct").length;
+    const wrong = cards.filter(card => card.dataset.reviewState === "wrong").length;
+    const checked = correct + wrong;
+    progress.value = checked;
+    progressLabel.textContent = "Checked " + checked + " / " + cards.length;
+    score.textContent = correct + " correct · " + wrong + " wrong";
+  }
+
+  for (const card of cards) {
+    const form = card.querySelector("form");
+    const input = form.querySelector("input");
+    const result = card.querySelector(".result");
+    const status = result.querySelector(".status");
+    const model = result.querySelector("pre code").textContent;
+    const syntax = card.dataset.syntax;
+    const accepted = [model, ...(alternatives[card.id] || [])]
+      .map(answer => normalize(answer, syntax, card.id));
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const answer = input.value.trim();
+      if (!answer) {
+        card.dataset.reviewState = "unchecked";
+        status.textContent = "Model answer · blank response is unscored";
+      } else {
+        const correct = accepted.includes(normalize(answer, syntax, card.id));
+        card.dataset.reviewState = correct ? "correct" : "wrong";
+        status.textContent = correct ? "Correct" : "Check your syntax against the model answer";
+      }
+      result.hidden = false;
+      updateScore();
+    });
+
+    input.addEventListener("input", () => {
+      if (result.hidden) return;
+      result.hidden = true;
+      delete card.dataset.reviewState;
+      updateScore();
+    });
+  }
+
+  document.getElementById("retry").addEventListener("click", () => {
+    for (const card of cards) {
+      card.querySelector("form").reset();
+      card.querySelector(".result").hidden = true;
+      delete card.dataset.reviewState;
+    }
+    updateScore();
+    cards[0].querySelector("input").focus();
+  });
+})();
+</script>
+</body>
+</html>
