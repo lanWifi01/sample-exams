@@ -6,6 +6,8 @@
   <title>AppDev Supplementary Exam Practice</title>
   <link rel="stylesheet" href="styles.css">
   <script src="review.js" defer></script>
+  <script src="vendor/babel-parser.js" defer></script>
+  <script src="appdev-answer-checker.js" defer></script>
 </head>
 <body id="top">
 <header class="site-header">
@@ -22,7 +24,7 @@
   <header class="page-intro">
     <h1>AppDev Supplementary Exam Practice</h1>
     <p>80 one-line coding questions on JavaScript, CSS, and ReactJS. Questions 1&ndash;10 are from the instructor. Questions 11&ndash;80 are for extra practice. Treat each item independently and assume referenced variables and components already exist.</p>
-    <p>Use the exact names, capitalization, brackets, and semicolons shown in the model answers. The checker accepts common formatting variations and straight single or double quotes where both work. Compare any other valid version with the model answer.</p>
+    <p>Use the names and constructs required by each question. The checker accepts common equivalent forms, including optional JavaScript semicolons. If it cannot match your approach, compare it with the model answer.</p>
     <nav class="section-nav" aria-label="Reviewer sections">
       <a href="#instructor">Instructor questions</a><a href="#practice">Slide-based practice</a><a href="#extra-practice">Extra slide practice</a><a href="#slides">Study slides</a>
     </nav>
@@ -140,14 +142,14 @@
     </article>
     <article class="question" id="q9" tabindex="-1" data-review-item data-syntax="jsx">
       <p class="meta">ReactJS</p>
-      <h3 class="prompt" id="prompt-9">9. Write the JSX paragraph that shows ©, then the variable year, then the text Anong WISH mo?.</h3>
+      <h3 class="prompt" id="prompt-9">9. Write the JSX paragraph that shows &copy;, then the variable year, then the text Anong WISH mo?.</h3>
       <form class="response">
         <input type="text" aria-labelledby="prompt-9" placeholder="Write one line of code" autocomplete="off" autocapitalize="off" spellcheck="false" style="font-family: Consolas, monospace">
         <button type="submit">Check answer</button>
       </form>
       <div class="result" aria-live="polite" hidden>
         <p class="status"></p>
-        <pre><code>&lt;p&gt;© {year} Anong WISH mo?&lt;/p&gt;</code></pre>
+        <pre><code>&lt;p&gt;&copy; {year} Anong WISH mo?&lt;/p&gt;</code></pre>
         <p class="explanation">JSX braces evaluate <code>year</code>. The copyright symbol and the words around the expression are rendered as text. <small>(React exercise 12)</small></p>
       </div>
     </article>
@@ -1114,7 +1116,7 @@
   <ul hidden></ul>
 </dialog>
 <script>
-(() => {
+document.addEventListener("DOMContentLoaded", () => {
   const cards = [...document.querySelectorAll("[data-review-item]")];
   const progress = document.getElementById("progress");
   const progressLabel = document.getElementById("progress-label");
@@ -1123,55 +1125,36 @@
     q3: ["for (let i = 1; i <= 5; ++i) { console.log(i); }"],
     q4: ['const greet = (name) => "Hello, " + name;'],
     q5: ['const liked = favoriteFoods.map((food) => "I like " + food);'],
+    q8: ['import { default as Title } from "./components/Title";'],
     q12: ["console.log(typeof(isStudent));"],
     q13: ['console.log("5" === 5);'],
     q14: ['const priya = students.find((s) => s.name === "Priya");'],
-    q16: ['aboutMe["hobby"] = "Drawing";'],
+    q16: ['aboutMe["hobby"] = "Drawing";', 'Object.assign(aboutMe, { hobby: "Drawing" });'],
+    q20: ['if (score < 70) { console.log("Fail"); } else { console.log("Pass"); }'],
     q21: ['while (count < 3) { console.log("Hello"); ++count; }', 'while (count < 3) { console.log("Hello"); count += 1; }'],
     q22: ['const button = document.querySelector("#changeColorBtn");'],
     q23: ['button.addEventListener("click", () => { console.log("Clicked"); });'],
     q24: ['setTimeout(() => { console.log("Hello"); }, 2000);'],
     q25: ["const { age, name } = student;"],
+    q29: ['const canLogIn = password !== "" && username !== "";'],
+    q30: ['const city = user?.address?.city ?? "Unknown";', 'const city = user["address"]?.city ?? "Unknown";'],
     q31: ["const passing = students.filter((s) => s.grade >= 60);"],
+    q42: ['const Title = () => <h1>Wish 107.5 Playlist</h1>;'],
+    q43: ["export { Title as default };"],
     q44: ['import { CURATOR, PLAYLIST_NAME } from "../constants";'],
+    q45: ['const PLAYLIST_NAME = "APPDEV1 Music Mix"; export { PLAYLIST_NAME };'],
     q46: ["<Fragment><Header /><Footer /></Fragment>"],
+    q48: ['<p>{!isLive ? "Playing from your saved queue." : "Listening live now."}</p>'],
     q50: ["<div className={styles.login} />", '<div className={styles["login"]} />', '<div className={styles["login"]}></div>'],
+    q51: ['document.body.style.setProperty("background-color", color);'],
+    q56: ["const clean = raw.trimStart().trimEnd();", "const clean = raw.trimEnd().trimStart();"],
     q58: ["console.log(students.some((s) => s.grade < 60));"],
-    q71: ["function Divider() { return (<hr />); }"],
+    q71: ["const Divider = () => <hr />;"],
+    q72: ['import { default as Divider } from "../Divider";'],
     q75: ["<div className={'song-card'}><SongOne /></div>"],
     q79: ["<input onChange={(e) => setValue(e.target.value)} />","<input onChange={e => { setValue(e.target.value); }} />","<input onChange={(e) => { setValue(e.target.value); }} />"],
     q80: ["<button onClick={() => { setCount(count + 1); }}>+1</button>"]
   };
-  const patterns = {
-    js: /(?<string>"[^"\\\r\n]*"|'[^'\\\r\n]*')|[A-Za-z_$][\w$]*|\d+(?:\.\d+)?|===|!==|=>|\+\+|\+=|>=|<=|&&|\|\||\?\.|\?\?|\.\.\.|\S/g,
-    css: /var\(|[.#][\w-]+|--[\w-]+|\d+(?:\.\d+)?(?:[a-zA-Z]+|%)?|[A-Za-z_][\w-]*|::|\S/g,
-    jsx: /(?<text>(?<!=>)(?<=[>}])[^<>{}\r\n]+(?=[<{]))|(?<template>\x60[^\x60\\\r\n]*\x60)|(?<string>"[^"\\\r\n]*"|'[^'\\\r\n]*')|<\/?[A-Za-z][\w-]*|<\/?>|\/>|=>|[A-Za-z_$][\w$]*|\d+(?:\.\d+)?|\S/g
-  };
-
-  function tokens(code, syntax, id) {
-    return [...code.matchAll(patterns[syntax])].flatMap(({ 0: token, groups }) => {
-      if (groups?.string) return ['"' + token.slice(1, -1) + '"'];
-      if (groups?.template) return [token.replace(/(\$\{)\s*([A-Za-z_$][\w$]*)\s*(\})/g, "$1$2$3")];
-      if (groups?.text && !token.trim() && ["q46", "q75"].includes(id)) return [];
-      return [token];
-    });
-  }
-
-  function normalize(code, syntax, id) {
-    if (syntax !== "css") return JSON.stringify(tokens(code, syntax, id));
-    const selector = code.slice(0, code.indexOf("{")).trim();
-    if (id === "q7" && selector !== ":root") return null;
-    if (id === "q39" && !/^\.form\s+input::placeholder$/.test(selector)) return null;
-    if (id === "q40" && !/^\.form\s+input:focus$/.test(selector)) return null;
-    if (["q34", "q35", "q36", "q37", "q65", "q66", "q68", "q69", "q70"].includes(id)) {
-      const rule = code.match(/^([^{}]+)\{([^{}]+);\s*\}$/);
-      if (!rule) return null;
-      const declarations = rule[2].split(";").map(part => JSON.stringify(tokens(part, syntax, id)));
-      return JSON.stringify([tokens(rule[1], syntax, id), declarations.sort()]);
-    }
-    return JSON.stringify(tokens(code, syntax, id));
-  }
-
   function updateScore() {
     const correct = cards.filter(card => card.dataset.reviewState === "correct").length;
     const wrong = cards.filter(card => card.dataset.reviewState === "wrong").length;
@@ -1188,8 +1171,8 @@
     const status = result.querySelector(".status");
     const model = result.querySelector("pre code").textContent;
     const syntax = card.dataset.syntax;
-    const accepted = [model, ...(alternatives[card.id] || [])]
-      .map(answer => normalize(answer, syntax, card.id));
+    const getSignature = answer => globalThis.appDevAnswerSignature(answer, syntax, card.id);
+    const accepted = new Set([model, ...(alternatives[card.id] || [])].map(getSignature).filter(Boolean));
 
     form.addEventListener("submit", event => {
       event.preventDefault();
@@ -1198,9 +1181,9 @@
         card.dataset.reviewState = "unchecked";
         status.textContent = "Model answer · blank response is unscored";
       } else {
-        const correct = accepted.includes(normalize(answer, syntax, card.id));
+        const correct = accepted.has(getSignature(answer));
         card.dataset.reviewState = correct ? "correct" : "wrong";
-        status.textContent = correct ? "Correct" : "Check your syntax against the model answer";
+        status.textContent = correct ? "Correct" : "Compare your answer with the question requirements";
       }
       result.hidden = false;
       updateScore();
@@ -1223,7 +1206,7 @@
     updateScore();
     cards[0].querySelector("input").focus();
   });
-})();
+});
 </script>
 </body>
 </html>
